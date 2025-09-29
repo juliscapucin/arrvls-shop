@@ -1,6 +1,134 @@
-/**
- * Configure Tailwind v4 in this file using CSS variables and directives:
- * https://tailwindcss.com/docs/v4-beta#css-first-configuration
- */
-
 @import 'tailwindcss';
+
+@font-face {
+  font-family: 'PPAcma';
+  font-style: normal;
+  font-weight: 200 700;
+  font-display: swap;
+  src:
+    local('PPAcma'),
+    url('/fonts/acma/PPAcma-Semibold.otf') format('opentype'),
+    url('/fonts/acma/PPAcma-Light.otf') format('opentype'),
+    url('/fonts/acma/PPAcma-Black.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  src:
+    url('/fonts/inter/Inter_18pt-Light.ttf') format('truetype'),
+    url('/fonts/inter/Inter_18pt-Medium.ttf') format('truetype'),
+    url('/fonts/inter/Inter_18pt-Bold.ttf') format('truetype');
+}
+
+:root {
+  --primary: oklch(22.931% 0.04172 147.508);
+  --primary-light: oklch(27.848% 0.01243 107.228);
+  --primary-accent: oklch(37.371% 0.09092 146.316);
+  --secondary: oklch(82.516% 0.00669 16.522);
+  --accent-1: oklch(59.077% 0.13363 274.229);
+  --accent-2: oklch(55.36% 0.14248 51.912);
+
+  --font-acma: 'PPAcma', sans-serif;
+  --font-inter: 'Inter', sans-serif;
+}
+
+[data-theme='light'] {
+  --primary: oklch(84.916% 0.01082 106.772);
+  --primary-light: oklch(90.698% 0.01331 106.788);
+  --primary-accent: oklch(89.548% 0.10095 112.585);
+  --secondary: oklch(13.335% 0.00529 107.148);
+  --accent-1: oklch(58.772% 0.18076 9.838);
+  --accent-2: oklch(43.037% 0.24756 269.068);
+}
+
+@theme inline {
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-accent: var(--primary-accent);
+  --color-secondary: var(--secondary);
+  --color-secondary-accent: var(--secondary-accent);
+  --color-accent-1: var(--accent-1);
+  --color-accent-2: var(--accent-2);
+
+  --font-primary: var(--font-acma);
+  --font-secondary: var(--font-inter);
+
+  --radius-huge: 6rem;
+
+  --text-display-large: 147px;
+  --text-display-medium: 103px;
+  --text-display-small: 62px;
+  --text-headline-large: 51px;
+  --text-headline-medium: 40px;
+  --text-headline-small: 32px;
+  --text-title-large: 22px;
+  --text-title-medium: 20px;
+  --text-title-small: 18px;
+  --text-body-large: 18px;
+  --text-body-medium: 16px;
+  --text-body-small: 14px;
+  --text-label-large: 14px;
+  --text-label-medium: 12px;
+  --text-label-small: 10px;
+
+  --max-width: 1800px;
+
+  /* Heights based on Tailwind's spacing scale: --spacing: 0.25rem /* 4px */
+  --header-height: calc(var(--spacing) * 14) /* [14] 4rem = 56px */;
+  --footer-height: 600px;
+
+  /* Minimap dimensions */
+  --minimap-width: 180px;
+}
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary) var(--secondary);
+  }
+
+  /* Chrome, Edge, and Safari */
+  *::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: var(--primary);
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: var(--secondary);
+  }
+
+  /* h1 {
+    @apply font-primary;
+  } */
+
+  button {
+    @apply cursor-pointer;
+  }
+
+  .underlined-link {
+    @apply relative inline-block w-fit cursor-pointer overflow-x-clip text-secondary no-underline;
+  }
+
+  .underlined-link::after {
+    @apply absolute bottom-[2px] left-0 z-50 h-px w-full -translate-x-[102%] bg-current transition-transform duration-300 content-[''];
+  }
+
+  .underlined-link:hover::after,
+  .active.underlined-link::after {
+    @apply translate-x-0;
+  }
+}

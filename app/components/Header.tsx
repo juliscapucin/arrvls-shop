@@ -25,9 +25,18 @@ export function Header({
 }: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
+    <header className="header bg-primary text-secondary">
+      <NavLink
+        className={({isActive}) =>
+          (isActive ? 'text-accent-1' : 'text-secondary') +
+          ' font-primary text-headline-large'
+        }
+        prefetch="intent"
+        to="/"
+        // style={activeLinkStyle}
+        end
+      >
+        ARRVLS
       </NavLink>
       <HeaderMenu
         menu={menu}
@@ -58,10 +67,13 @@ export function HeaderMenu({
     <nav className={className} role="navigation">
       {viewport === 'mobile' && (
         <NavLink
+          className={({isActive}) =>
+            (isActive ? 'text-accent-1' : 'text-secondary') + ' underlined-link'
+          }
           end
           onClick={close}
           prefetch="intent"
-          style={activeLinkStyle}
+          // style={activeLinkStyle}
           to="/"
         >
           Home
@@ -79,12 +91,15 @@ export function HeaderMenu({
             : item.url;
         return (
           <NavLink
-            className="header-menu-item"
+            className={({isActive}) =>
+              (isActive ? 'text-accent-1' : 'text-secondary') +
+              ' underlined-link'
+            }
             end
             key={item.id}
             onClick={close}
             prefetch="intent"
-            style={activeLinkStyle}
+            // style={activeLinkStyle}
             to={url}
           >
             {item.title}
@@ -226,6 +241,6 @@ function activeLinkStyle({
 }) {
   return {
     fontWeight: isActive ? 'bold' : undefined,
-    color: isPending ? 'grey' : 'black',
+    color: isPending ? 'var(--color-accent-1)' : 'var(--color-accent-2)',
   };
 }
