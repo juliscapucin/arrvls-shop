@@ -111,7 +111,7 @@
   }
 
   .underlined-link::after {
-    @apply absolute bottom-[2px] left-0 z-50 h-px w-full -translate-x-[102%] bg-current transition-transform duration-300 content-[''];
+    @apply absolute bottom-[2px] left-0 z-10 h-px w-full -translate-x-[102%] bg-current transition-transform duration-300 content-[''];
   }
 
   .underlined-link:hover::after,

@@ -26,6 +26,11 @@ export function Header({
   const {shop, menu} = header;
   return (
     <header className="text-secondary flex items-end justify-between gap-32 bg-primary px-4 lg:px-8 py-2 h-header max-w-container mx-auto border-b border-b-secondary">
+      {/* MOBILE CTAS */}
+      <div className="md:hidden absolute top-4 right-4">
+        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      </div>
+
       {/* LOGO */}
       <NavLink
         className={({isActive}) =>
@@ -44,8 +49,14 @@ export function Header({
         viewport="desktop"
         primaryDomainUrl={header.shop.primaryDomain.url}
         publicStoreDomain={publicStoreDomain}
+        isLoggedIn={isLoggedIn}
+        cart={cart}
       />
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+
+      {/* DESKTOP CTAS */}
+      <div className="hidden md:block">
+        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      </div>
       <HeaderMenuMobileToggle />
     </header>
   );
@@ -56,11 +67,15 @@ export function HeaderMenu({
   primaryDomainUrl,
   viewport,
   publicStoreDomain,
+  isLoggedIn,
+  cart,
 }: {
   menu: HeaderProps['header']['menu'];
   primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
   viewport: Viewport;
   publicStoreDomain: HeaderProps['publicStoreDomain'];
+  isLoggedIn?: HeaderProps['isLoggedIn'];
+  cart?: HeaderProps['cart'];
 }) {
   const {close} = useAside();
   const headerStyles = `${viewport === 'mobile' ? 'flex flex-col items-center' : 'hidden lg:flex flex-1 justify-center'} gap-6`;
@@ -124,7 +139,7 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="hidden md:flex items-end gap-4" role="navigation">
+    <nav className="aiaiai flex items-end gap-4 z-50" role="navigation">
       <NavLink
         prefetch="intent"
         to="/account"

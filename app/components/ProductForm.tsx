@@ -25,8 +25,10 @@ export function ProductForm({
 
         return (
           <div className="product-options" key={option.name}>
-            <h5>{option.name}</h5>
-            <div className="product-options-grid flex flex-wrap gap-2">
+            <h5 className="heading-title">{option.name}</h5>
+
+            {/* PRODUCT OPTIONS */}
+            <div className="flex flex-wrap gap-2">
               {option.optionValues.map((value) => {
                 const {
                   name,
@@ -46,7 +48,7 @@ export function ProductForm({
                   // as an anchor tag
                   return (
                     <Link
-                      className="product-options-item"
+                      className="btn-ghost"
                       key={option.name + name}
                       prefetch="intent"
                       preventScrollReset
@@ -71,16 +73,12 @@ export function ProductForm({
                   return (
                     <button
                       type="button"
-                      className={`product-options-item${
-                        exists && !selected ? ' link' : ''
-                      }`}
+                      className={`${
+                        exists && !selected
+                          ? 'btn-ghost'
+                          : 'btn-secondary pointer-events-none'
+                      } ${available ? '' : 'line-through'}`}
                       key={option.name + name}
-                      style={{
-                        border: selected
-                          ? '1px solid black'
-                          : '1px solid transparent',
-                        opacity: available ? 1 : 0.3,
-                      }}
                       disabled={!exists}
                       onClick={() => {
                         if (!selected) {
