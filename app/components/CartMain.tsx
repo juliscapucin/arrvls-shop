@@ -53,14 +53,21 @@ function CartEmpty({
 }) {
   const {close} = useAside();
   return (
-    <div hidden={hidden}>
-      <br />
-      <p>
+    <div
+      className="min-h-full flex flex-col justify-center items-center gap-8"
+      hidden={hidden}
+    >
+      <h3 className="heading-title">Your cart is empty</h3>
+      <p className="px-24 text-center">
         Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
         started!
       </p>
-      <br />
-      <Link to="/collections" onClick={close} prefetch="viewport">
+      <Link
+        className="btn-ghost"
+        to="/collections"
+        onClick={close}
+        prefetch="viewport"
+      >
         Continue shopping →
       </Link>
     </div>

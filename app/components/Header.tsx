@@ -44,13 +44,13 @@ export function Header({
       >
         ARRVLS
       </NavLink>
+
+      {/* NAV MENU */}
       <HeaderMenu
         menu={menu}
         viewport="desktop"
         primaryDomainUrl={header.shop.primaryDomain.url}
         publicStoreDomain={publicStoreDomain}
-        isLoggedIn={isLoggedIn}
-        cart={cart}
       />
 
       {/* DESKTOP CTAS */}
@@ -67,15 +67,11 @@ export function HeaderMenu({
   primaryDomainUrl,
   viewport,
   publicStoreDomain,
-  isLoggedIn,
-  cart,
 }: {
   menu: HeaderProps['header']['menu'];
   primaryDomainUrl: HeaderProps['header']['shop']['primaryDomain']['url'];
   viewport: Viewport;
   publicStoreDomain: HeaderProps['publicStoreDomain'];
-  isLoggedIn?: HeaderProps['isLoggedIn'];
-  cart?: HeaderProps['cart'];
 }) {
   const {close} = useAside();
   const headerStyles = `${viewport === 'mobile' ? 'flex flex-col items-center' : 'hidden lg:flex flex-1 justify-center'} gap-6`;
@@ -139,7 +135,8 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="aiaiai flex items-end gap-4 z-50" role="navigation">
+    <nav className="flex items-end gap-4 z-50" role="navigation">
+      {/* ACCOUNT */}
       <NavLink
         prefetch="intent"
         to="/account"
@@ -155,7 +152,11 @@ function HeaderCtas({
           </Await>
         </Suspense>
       </NavLink>
+
+      {/* SEARCH */}
       <SearchToggle />
+
+      {/* CART */}
       <CartToggle cart={cart} />
     </nav>
   );
@@ -194,6 +195,7 @@ function CartBadge({count}: {count: number | null}) {
       onClick={(e) => {
         e.preventDefault();
         open('cart');
+        // for analytics
         publish('cart_viewed', {
           cart,
           prevCart,
@@ -203,9 +205,11 @@ function CartBadge({count}: {count: number | null}) {
       }}
     >
       <span className="underlined-link">Cart</span>
-      <span className="rounded-full bg-secondary text-primary w-4 aspect-square text-label-small flex items-center justify-center">
-        {count === null ? <span>&nbsp;</span> : count}
-      </span>
+      {count !== null && count > 0 && (
+        <span className="rounded-full bg-secondary text-primary w-4 aspect-square text-label-small flex items-center justify-center">
+          {count === null ? <span>&nbsp;</span> : count}
+        </span>
+      )}
     </a>
   );
 }

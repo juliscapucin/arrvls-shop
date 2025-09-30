@@ -1,7 +1,3 @@
-:root {
-  --cart-aside-summary-height-with-discount: 300px;
-}
-
 /*
 * --------------------------------------------------
 * components/Aside
@@ -12,22 +8,6 @@
   html:has(.overlay.expanded) {
     overflow: hidden;
   }
-}
-
-/*
-* --------------------------------------------------
-* components/Cart
-* --------------------------------------------------
-*/
-
-.cart-main.with-discount {
-  max-height: calc(100vh - var(--cart-aside-summary-height-with-discount));
-}
-
-.cart-discount {
-  align-items: center;
-  display: flex;
-  margin-top: 0.25rem;
 }
 
 /*

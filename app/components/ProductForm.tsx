@@ -122,6 +122,7 @@ export function ProductForm({
   );
 }
 
+// PRODUCT OPTION SWATCH
 function ProductOptionSwatch({
   swatch,
   name,

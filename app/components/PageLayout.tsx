@@ -77,10 +77,10 @@ function SearchAside() {
   const queriesDatalistId = useId();
   return (
     <Aside type="search" heading="Search">
-      <div className="mt-8">
+      <div className="mt-4">
         <SearchFormPredictive>
           {({fetchResults, goToSearch, inputRef}) => (
-            <div className="flex flex-col justify-start pb-8">
+            <div className="flex flex-col justify-start gap-4 pb-4 border-b">
               <input
                 className="input-primary"
                 autoComplete="off"
@@ -92,7 +92,6 @@ function SearchAside() {
                 type="search"
                 list={queriesDatalistId}
               />
-              &nbsp;
               <button className="btn-secondary" onClick={goToSearch}>
                 Search
               </button>
@@ -140,7 +139,7 @@ function SearchAside() {
                 />
                 {term.current && total ? (
                   <Link
-                    className="btn-ghost mt-8 block"
+                    className="btn-ghost mt-8 block justify-self-center"
                     onClick={closeSearch}
                     to={`${SEARCH_ENDPOINT}?q=${term.current}`}
                   >

@@ -13,7 +13,7 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
   const className =
     layout === 'page'
       ? 'relative'
-      : 'absolute left-4 right-4 bottom-0 border-t border-t-secondary pt-4 space-y-2';
+      : 'absolute left-4 right-4 bottom-0 border-t border-t-secondary pt-4';
 
   return (
     <div aria-label="Cart summary" className={className}>
@@ -76,13 +76,14 @@ function CartDiscounts({
     <div>
       {/* Have existing discount, display it with a remove option */}
       <dl hidden={!codes.length}>
-        <div className="w-full border-b pb-4">
-          <dt className="mb-4">Discount(s)</dt>
+        <div className="w-full border-b py-4 flex items-center gap-4">
+          <dt>Discount(s)</dt>
           <UpdateDiscountForm>
-            <div className="flex gap-2">
-              <code>{codes?.join(', ')}</code>
+            <div className="flex items-center gap-2">
+              <code className="ml-2 border p-2">{codes?.join(', ')}</code>
 
-              <button className="btn-ghost">Remove</button>
+              {/* REMOVE DISCOUNT BUTTON */}
+              <button className="btn-ghost">X</button>
             </div>
           </UpdateDiscountForm>
         </div>

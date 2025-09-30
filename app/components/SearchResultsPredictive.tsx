@@ -90,7 +90,7 @@ function SearchResultsPredictiveArticles({
 
   return (
     <div key="articles">
-      <h5>Articles</h5>
+      <h5 className="my-4 heading-title">Articles</h5>
       <ul className="flex flex-col gap-4">
         {articles.map((article) => {
           const articleUrl = urlWithTrackingParams({
@@ -137,7 +137,7 @@ function SearchResultsPredictiveCollections({
 
   return (
     <div key="collections">
-      <h5>Collections</h5>
+      <h5 className="my-4 heading-title">Collections</h5>
       <ul className="flex flex-col gap-4">
         {collections.map((collection) => {
           const collectionUrl = urlWithTrackingParams({
@@ -184,7 +184,7 @@ function SearchResultsPredictivePages({
 
   return (
     <div key="pages">
-      <h5>Pages</h5>
+      <h5 className="my-4 heading-title">Pages</h5>
       <ul className="flex flex-col gap-4">
         {pages.map((page) => {
           const pageUrl = urlWithTrackingParams({
@@ -219,7 +219,7 @@ function SearchResultsPredictiveProducts({
 
   return (
     <div key="products">
-      <h5 className="my-4">Products</h5>
+      <h5 className="my-4 heading-title">Products</h5>
       <ul className="flex flex-col gap-4">
         {products.map((product) => {
           const productUrl = urlWithTrackingParams({
@@ -288,7 +288,7 @@ function SearchResultsPredictiveEmpty({
   }
 
   return (
-    <p>
+    <p className="mt-4 text-center">
       No results found for <q>{term.current}</q>
     </p>
   );
