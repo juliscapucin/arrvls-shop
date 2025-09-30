@@ -25,12 +25,12 @@ export function Header({
 }: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <header className="text-secondary flex items-end gap-32 bg-primary px-4 lg:px-8 py-2 h-header max-w-container mx-auto border-b border-b-secondary">
+    <header className="text-secondary flex items-end justify-between gap-32 bg-primary px-4 lg:px-8 py-2 h-header max-w-container mx-auto border-b border-b-secondary">
       {/* LOGO */}
       <NavLink
         className={({isActive}) =>
           (isActive ? 'text-secondary/80' : 'text-secondary') +
-          ' font-primary text-headline-large leading-none px-1'
+          ' text-headline-large leading-none px-1 font-thin'
         }
         prefetch="intent"
         to="/"
@@ -46,6 +46,7 @@ export function Header({
         publicStoreDomain={publicStoreDomain}
       />
       <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+      <HeaderMenuMobileToggle />
     </header>
   );
 }
@@ -62,7 +63,7 @@ export function HeaderMenu({
   publicStoreDomain: HeaderProps['publicStoreDomain'];
 }) {
   const {close} = useAside();
-  const headerStyles = `${viewport === 'mobile' ? 'flex flex-col text-primary' : 'hidden lg:flex flex-1 justify-center'} gap-6`;
+  const headerStyles = `${viewport === 'mobile' ? 'flex flex-col items-center' : 'hidden lg:flex flex-1 justify-center'} gap-6`;
 
   return (
     <nav className={headerStyles} role="navigation">
@@ -70,8 +71,8 @@ export function HeaderMenu({
       {viewport === 'mobile' && (
         <NavLink
           className={({isActive}) =>
-            (isActive ? 'active text-accent-1' : 'text-primary') +
-            ' underlined-link'
+            (isActive ? 'active text-secondary/50' : 'text-secondary') +
+            ' underlined-link text-headline-large font-thin leading-16'
           }
           end
           onClick={close}
@@ -97,9 +98,11 @@ export function HeaderMenu({
         return (
           <NavLink
             className={({isActive}) =>
-              (isActive
-                ? 'active text-accent-1'
-                : 'text-primary lg:text-secondary') + ' underlined-link'
+              (isActive ? 'active text-secondary/50' : 'text-secondary') +
+              ' underlined-link' +
+              (viewport === 'mobile'
+                ? ' text-headline-large font-thin leading-16'
+                : '')
             }
             end
             key={item.id}
@@ -121,15 +124,13 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="flex gap-4" role="navigation">
-      <HeaderMenuMobileToggle />
+    <nav className="hidden md:flex items-end gap-4" role="navigation">
       <NavLink
         prefetch="intent"
         to="/account"
         className={({isActive}) =>
-          (isActive
-            ? 'active text-accent-1'
-            : 'text-primary lg:text-secondary') + ' underlined-link'
+          (isActive ? 'active text-secondary/50' : 'text-secondary') +
+          ' underlined-link'
         }
         // style={activeLinkStyle}
       >
@@ -153,7 +154,7 @@ function HeaderMenuMobileToggle() {
       onClick={() => open('mobile')}
       aria-label="Open menu"
     >
-      ☰
+      <IconBurger />
     </button>
   );
 }
@@ -187,7 +188,7 @@ function CartBadge({count}: {count: number | null}) {
       }}
     >
       <span className="underlined-link">Cart</span>
-      <span className="rounded-full bg-accent-1 w-4 aspect-square text-label-small flex items-center justify-center">
+      <span className="rounded-full bg-secondary text-primary w-4 aspect-square text-label-small flex items-center justify-center">
         {count === null ? <span>&nbsp;</span> : count}
       </span>
     </a>
@@ -251,6 +252,15 @@ const FALLBACK_HEADER_MENU = {
     },
   ],
 };
+
+export default function IconBurger() {
+  return (
+    <div className="h-8 w-12 flex flex-col justify-center gap-3 relative">
+      <div className="h-px w-full bg-secondary"></div>
+      <div className="h-px w-full bg-secondary"></div>
+    </div>
+  );
+}
 
 function activeLinkStyle({
   isActive,

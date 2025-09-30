@@ -1,24 +1,6 @@
 @import 'tailwindcss';
 
-@font-face {
-  font-family: 'PPAcma';
-  font-style: normal;
-  font-weight: 200 700;
-  font-display: swap;
-  src:
-    local('PPAcma'),
-    url('/fonts/acma/PPAcma-Semibold.otf') format('opentype'),
-    url('/fonts/acma/PPAcma-Light.otf') format('opentype'),
-    url('/fonts/acma/PPAcma-Black.otf') format('opentype');
-}
-
-@font-face {
-  font-family: 'Inter';
-  src:
-    url('/fonts/inter/Inter_18pt-Light.ttf') format('truetype'),
-    url('/fonts/inter/Inter_18pt-Medium.ttf') format('truetype'),
-    url('/fonts/inter/Inter_18pt-Bold.ttf') format('truetype');
-}
+@import './fonts.css';
 
 :root {
   --primary: oklch(22.931% 0.04172 147.508);
@@ -115,13 +97,17 @@
     background-color: var(--secondary);
   }
 
+  html {
+    scrollbar-gutter: stable;
+  }
+
   /* LINK STYLES */
   a {
     @apply no-underline;
   }
 
   .underlined-link {
-    @apply relative inline-block w-fit cursor-pointer overflow-x-clip text-secondary no-underline;
+    @apply relative inline-block w-fit cursor-pointer overflow-x-clip text-secondary no-underline font-light;
   }
 
   .underlined-link::after {
@@ -139,15 +125,15 @@
   }
 
   .btn-primary {
-    @apply bg-primary text-secondary font-semibold py-2 px-4 transition-colors duration-300 hover:bg-secondary hover:text-primary;
+    @apply bg-primary text-secondary font-medium py-2 px-4 transition-colors duration-300 hover:bg-secondary hover:text-primary;
   }
 
   .btn-secondary {
-    @apply bg-secondary text-primary font-semibold py-2 px-4 transition-colors duration-300 hover:bg-secondary/30 hover:text-secondary;
+    @apply bg-secondary text-primary font-medium py-2 px-4 transition-colors duration-300 hover:bg-secondary/30 hover:text-secondary;
   }
 
   .btn-ghost {
-    @apply bg-transparent text-secondary font-semibold py-2 px-4 border border-secondary transition-colors duration-300 hover:bg-secondary hover:text-primary;
+    @apply bg-transparent text-secondary font-medium py-2 px-4 border border-secondary transition-colors duration-300 hover:bg-secondary hover:text-primary;
   }
 
   /* HEADING STYLES */
@@ -156,15 +142,15 @@
   } */
 
   .heading-display {
-    @apply text-display-small md:text-display-medium lg:text-display-large leading-none;
+    @apply text-display-small md:text-display-medium lg:text-display-large leading-none font-thin;
   }
 
   .heading-headline {
-    @apply text-headline-small md:text-headline-medium lg:text-headline-large leading-none;
+    @apply text-headline-small md:text-headline-medium lg:text-headline-large leading-none font-thin;
   }
 
   .heading-title {
-    @apply text-title-small md:text-title-medium lg:text-title-large font-semibold;
+    @apply text-title-small md:text-title-medium lg:text-title-large font-medium;
   }
 
   /* INPUT STYLES */

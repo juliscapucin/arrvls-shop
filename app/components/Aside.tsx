@@ -30,7 +30,7 @@ export function Aside({
 }: {
   children?: React.ReactNode;
   type: AsideType;
-  heading: React.ReactNode;
+  heading?: React.ReactNode;
 }) {
   const {type: activeType, close} = useAside();
 
@@ -71,23 +71,22 @@ export function Aside({
     // OVERLAY
     <div
       aria-modal
-      className={`fixed inset-0 transition-opacity duration-400 z-50 bg-primary/50 ${type === activeType ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+      className={`fixed inset-0 transition-opacity duration-400 z-50 bg-primary/50 ${type === activeType ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'} ${type === 'mobile' ? 'lg:hidden' : ''}`}
       role="dialog"
     >
       {/* ASIDE */}
       <aside
-        className={`bg-primary w-aside fixed border-l border-l-secondary top-0 right-0 h-screen transition-transform duration-200 ease-in-out shadow-2xl p-4 ${type === activeType ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`bg-primary w-screen md:w-aside fixed md:border-l border-l-secondary top-0 right-0 h-screen transition-transform duration-200 ease-in-out shadow-2xl p-4 ${type === activeType ? 'translate-x-0' : 'translate-x-full'}`}
       >
-        <header className="flex items-center justify-between h-16 border-b border-secondary">
-          <h3 className="text-headline-small md:text-headline-medium lg:text-headline-large">
-            {heading}
-          </h3>
+        {/* ASIDE HEADER */}
+        <header className="flex items-center justify-between h-16 lg:border-b border-secondary">
+          {heading && <h3 className="heading-headline">{heading}</h3>}
           <button
-            className="transition-opacity hover:opacity-50"
+            className="mx-auto md:mx-0 transition-opacity hover:opacity-50"
             onClick={close}
             aria-label="Close"
           >
-            &times;
+            <IconClose />
           </button>
         </header>
         <main className="mt-8">{children}</main>
@@ -121,4 +120,13 @@ export function useAside() {
     throw new Error('useAside must be used within an AsideProvider');
   }
   return aside;
+}
+
+export default function IconClose() {
+  return (
+    <div className="h-12 w-12 flex flex-col justify-center relative">
+      <div className="absolute h-px w-full bg-secondary rotate-45"></div>
+      <div className="absolute h-px w-full bg-secondary -rotate-45"></div>
+    </div>
+  );
 }

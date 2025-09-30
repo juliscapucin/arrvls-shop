@@ -1,0 +1,55 @@
+@font-face {
+  font-family: 'PPAcma';
+  font-style: normal;
+  font-weight: 300; /* Light */
+  font-display: swap;
+  src: url('/fonts/acma/PPAcma-Light.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'PPAcma';
+  font-style: normal;
+  font-weight: 600; /* Semibold */
+  font-display: swap;
+  src: url('/fonts/acma/PPAcma-Semibold.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'PPAcma';
+  font-style: normal;
+  font-weight: 900; /* Black */
+  font-display: swap;
+  src: url('/fonts/acma/PPAcma-Black.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 200; /* Thin */
+  font-display: swap;
+  src: url('/fonts/inter/Inter_18pt-Thin.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 300; /* Light */
+  font-display: swap;
+  src: url('/fonts/inter/Inter_18pt-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500; /* Medium */
+  font-display: swap;
+  src: url('/fonts/inter/Inter_18pt-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700; /* Bold */
+  font-display: swap;
+  src: url('/fonts/inter/Inter_18pt-Bold.ttf') format('truetype');
+}

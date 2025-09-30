@@ -155,7 +155,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
         <Meta />
         <Links />
       </head>
-      <body className="font-secondary bg-primary text-secondary">
+      <body className="font-secondary bg-primary text-secondary font-light">
         {data ? (
           <Analytics.Provider
             cart={data.cart}
