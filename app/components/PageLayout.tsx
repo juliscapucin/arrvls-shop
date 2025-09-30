@@ -45,7 +45,9 @@ export function PageLayout({
           publicStoreDomain={publicStoreDomain}
         />
       )}
-      <main>{children}</main>
+      <main className="max-w-container mx-auto p-4 md:p-8 min-h-full">
+        {children}
+      </main>
       <Footer
         footer={footer}
         header={header}
@@ -55,9 +57,10 @@ export function PageLayout({
   );
 }
 
+// CART
 function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
   return (
-    <Aside type="cart" heading="CART">
+    <Aside type="cart" heading="Cart">
       <Suspense fallback={<p>Loading cart ...</p>}>
         <Await resolve={cart}>
           {(cart) => {
@@ -69,16 +72,18 @@ function CartAside({cart}: {cart: PageLayoutProps['cart']}) {
   );
 }
 
+// SEARCH
 function SearchAside() {
   const queriesDatalistId = useId();
   return (
-    <Aside type="search" heading="SEARCH">
-      <div className="predictive-search">
-        <br />
+    <Aside type="search" heading="Search">
+      <div className="mt-8">
         <SearchFormPredictive>
           {({fetchResults, goToSearch, inputRef}) => (
-            <>
+            <div className="flex flex-col justify-start pb-8">
               <input
+                className="input-primary"
+                autoComplete="off"
                 name="q"
                 onChange={fetchResults}
                 onFocus={fetchResults}
@@ -88,8 +93,10 @@ function SearchAside() {
                 list={queriesDatalistId}
               />
               &nbsp;
-              <button onClick={goToSearch}>Search</button>
-            </>
+              <button className="btn-secondary" onClick={goToSearch}>
+                Search
+              </button>
+            </div>
           )}
         </SearchFormPredictive>
 
@@ -133,6 +140,7 @@ function SearchAside() {
                 />
                 {term.current && total ? (
                   <Link
+                    className="btn-ghost mt-8 block"
                     onClick={closeSearch}
                     to={`${SEARCH_ENDPOINT}?q=${term.current}`}
                   >
@@ -151,6 +159,7 @@ function SearchAside() {
   );
 }
 
+// MOBILE MENU
 function MobileMenuAside({
   header,
   publicStoreDomain,
@@ -161,7 +170,7 @@ function MobileMenuAside({
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (
-      <Aside type="mobile" heading="MENU">
+      <Aside type="mobile" heading="Menu">
         <HeaderMenu
           menu={header.menu}
           viewport="mobile"

@@ -26,7 +26,7 @@ export function ProductForm({
         return (
           <div className="product-options" key={option.name}>
             <h5>{option.name}</h5>
-            <div className="product-options-grid">
+            <div className="product-options-grid flex flex-wrap gap-2">
               {option.optionValues.map((value) => {
                 const {
                   name,

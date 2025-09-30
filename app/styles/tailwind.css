@@ -71,11 +71,15 @@
   --text-label-medium: 12px;
   --text-label-small: 10px;
 
-  --max-width: 1800px;
+  /* Widths based on Tailwind's spacing scale: --spacing: 0.25rem /* 4px */
+  --width-aside: 500px;
+  --max-width-container: 1800px;
+  --grid-item-width: 355px;
 
   /* Heights based on Tailwind's spacing scale: --spacing: 0.25rem /* 4px */
-  --header-height: calc(var(--spacing) * 14) /* [14] 4rem = 56px */;
-  --footer-height: 600px;
+  --height-header: calc(var(--spacing) * 32);
+  --height-footer: calc(var(--spacing) * 16);
+  --min-height-full: calc(100vh - var(--height-header) - var(--height-footer));
 
   /* Minimap dimensions */
   --minimap-width: 180px;
@@ -111,12 +115,9 @@
     background-color: var(--secondary);
   }
 
-  /* h1 {
-    @apply font-primary;
-  } */
-
-  button {
-    @apply cursor-pointer;
+  /* LINK STYLES */
+  a {
+    @apply no-underline;
   }
 
   .underlined-link {
@@ -130,5 +131,44 @@
   .underlined-link:hover::after,
   .active.underlined-link::after {
     @apply translate-x-0;
+  }
+
+  /* BUTTON STYLES */
+  button {
+    @apply cursor-pointer;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-secondary font-semibold py-2 px-4 transition-colors duration-300 hover:bg-secondary hover:text-primary;
+  }
+
+  .btn-secondary {
+    @apply bg-secondary text-primary font-semibold py-2 px-4 transition-colors duration-300 hover:bg-secondary/30 hover:text-secondary;
+  }
+
+  .btn-ghost {
+    @apply bg-transparent text-secondary font-semibold py-2 px-4 border border-secondary transition-colors duration-300 hover:bg-secondary hover:text-primary;
+  }
+
+  /* HEADING STYLES */
+  /* h1 {
+    @apply font-primary;
+  } */
+
+  .heading-display {
+    @apply text-display-small md:text-display-medium lg:text-display-large leading-none;
+  }
+
+  .heading-headline {
+    @apply text-headline-small md:text-headline-medium lg:text-headline-large leading-none;
+  }
+
+  .heading-title {
+    @apply text-title-small md:text-title-medium lg:text-title-large font-semibold;
+  }
+
+  /* INPUT STYLES */
+  .input-primary {
+    @apply border border-secondary py-2 px-4 bg-transparent text-secondary placeholder:text-secondary/70 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors duration-300;
   }
 }

@@ -21,7 +21,7 @@ export function ProductItem({
   const image = product.featuredImage;
   return (
     <Link
-      className="product-item"
+      className="h-auto w-full"
       key={product.id}
       prefetch="intent"
       to={variantUrl}

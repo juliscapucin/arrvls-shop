@@ -102,11 +102,12 @@ export default function Product() {
   const {title, descriptionHtml} = product;
 
   return (
-    <div className="product">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
       <ProductImage image={selectedVariant?.image} />
-      <div className="product-main">
-        <h1>{title}</h1>
+      <div className="sticky top-4">
+        <h1 className="heading-headline">{title}</h1>
         <ProductPrice
+          classes="my-4 heading-title"
           price={selectedVariant?.price}
           compareAtPrice={selectedVariant?.compareAtPrice}
         />

@@ -40,12 +40,13 @@ export default function SearchPage() {
   if (type === 'predictive') return null;
 
   return (
-    <div className="search">
-      <h1>Search</h1>
+    <div>
+      <h1 className="heading-display">Search</h1>
       <SearchForm>
         {({inputRef}) => (
-          <>
+          <div className="flex flex-col">
             <input
+              className="input-primary"
               defaultValue={term}
               name="q"
               placeholder="Search…"
@@ -53,8 +54,10 @@ export default function SearchPage() {
               type="search"
             />
             &nbsp;
-            <button type="submit">Search</button>
-          </>
+            <button className="btn-secondary" type="submit">
+              Search
+            </button>
+          </div>
         )}
       </SearchForm>
       {error && <p style={{color: 'red'}}>{error}</p>}
@@ -63,7 +66,7 @@ export default function SearchPage() {
       ) : (
         <SearchResults result={result} term={term}>
           {({articles, pages, products, term}) => (
-            <div>
+            <div className="mt-8">
               <SearchResults.Products products={products} term={term} />
               <SearchResults.Pages pages={pages} term={term} />
               <SearchResults.Articles articles={articles} term={term} />

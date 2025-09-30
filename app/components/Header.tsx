@@ -25,11 +25,12 @@ export function Header({
 }: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <header className="header bg-primary text-secondary">
+    <header className="text-secondary flex items-end gap-32 bg-primary px-4 lg:px-8 py-2 h-header max-w-container mx-auto border-b border-b-secondary">
+      {/* LOGO */}
       <NavLink
         className={({isActive}) =>
-          (isActive ? 'text-accent-1' : 'text-secondary') +
-          ' font-primary text-headline-large'
+          (isActive ? 'text-secondary/80' : 'text-secondary') +
+          ' font-primary text-headline-large leading-none px-1'
         }
         prefetch="intent"
         to="/"
@@ -60,15 +61,17 @@ export function HeaderMenu({
   viewport: Viewport;
   publicStoreDomain: HeaderProps['publicStoreDomain'];
 }) {
-  const className = `header-menu-${viewport}`;
   const {close} = useAside();
+  const headerStyles = `${viewport === 'mobile' ? 'flex flex-col text-primary' : 'hidden lg:flex flex-1 justify-center'} gap-6`;
 
   return (
-    <nav className={className} role="navigation">
+    <nav className={headerStyles} role="navigation">
+      {/* MOBILE (render home link) */}
       {viewport === 'mobile' && (
         <NavLink
           className={({isActive}) =>
-            (isActive ? 'text-accent-1' : 'text-secondary') + ' underlined-link'
+            (isActive ? 'active text-accent-1' : 'text-primary') +
+            ' underlined-link'
           }
           end
           onClick={close}
@@ -79,6 +82,8 @@ export function HeaderMenu({
           Home
         </NavLink>
       )}
+
+      {/* MOBILE & DESKTOP */}
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
         if (!item.url) return null;
 
@@ -92,8 +97,9 @@ export function HeaderMenu({
         return (
           <NavLink
             className={({isActive}) =>
-              (isActive ? 'text-accent-1' : 'text-secondary') +
-              ' underlined-link'
+              (isActive
+                ? 'active text-accent-1'
+                : 'text-primary lg:text-secondary') + ' underlined-link'
             }
             end
             key={item.id}
@@ -115,9 +121,18 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="header-ctas" role="navigation">
+    <nav className="flex gap-4" role="navigation">
       <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
+      <NavLink
+        prefetch="intent"
+        to="/account"
+        className={({isActive}) =>
+          (isActive
+            ? 'active text-accent-1'
+            : 'text-primary lg:text-secondary') + ' underlined-link'
+        }
+        // style={activeLinkStyle}
+      >
         <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">
             {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
@@ -134,10 +149,11 @@ function HeaderMenuMobileToggle() {
   const {open} = useAside();
   return (
     <button
-      className="header-menu-mobile-toggle reset"
+      className="lg:hidden"
       onClick={() => open('mobile')}
+      aria-label="Open menu"
     >
-      <h3>☰</h3>
+      ☰
     </button>
   );
 }
@@ -145,7 +161,7 @@ function HeaderMenuMobileToggle() {
 function SearchToggle() {
   const {open} = useAside();
   return (
-    <button className="reset" onClick={() => open('search')}>
+    <button className="underlined-link" onClick={() => open('search')}>
       Search
     </button>
   );
@@ -157,6 +173,7 @@ function CartBadge({count}: {count: number | null}) {
 
   return (
     <a
+      className="relative flex items-start gap-1"
       href="/cart"
       onClick={(e) => {
         e.preventDefault();
@@ -169,7 +186,10 @@ function CartBadge({count}: {count: number | null}) {
         } as CartViewPayload);
       }}
     >
-      Cart {count === null ? <span>&nbsp;</span> : count}
+      <span className="underlined-link">Cart</span>
+      <span className="rounded-full bg-accent-1 w-4 aspect-square text-label-small flex items-center justify-center">
+        {count === null ? <span>&nbsp;</span> : count}
+      </span>
     </a>
   );
 }

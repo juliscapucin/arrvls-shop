@@ -39,8 +39,8 @@ function SearchResultsArticles({
   }
 
   return (
-    <div className="search-result">
-      <h2>Articles</h2>
+    <div className="mb-2">
+      <h2 className="heading-headline">Articles</h2>
       <div>
         {articles?.nodes?.map((article) => {
           const articleUrl = urlWithTrackingParams({
@@ -50,7 +50,7 @@ function SearchResultsArticles({
           });
 
           return (
-            <div className="search-results-item" key={article.id}>
+            <div className="mb-1" key={article.id}>
               <Link prefetch="intent" to={articleUrl}>
                 {article.title}
               </Link>
@@ -69,8 +69,8 @@ function SearchResultsPages({term, pages}: PartialSearchResult<'pages'>) {
   }
 
   return (
-    <div className="search-result">
-      <h2>Pages</h2>
+    <div>
+      <h2 className="heading-headline">Pages</h2>
       <div>
         {pages?.nodes?.map((page) => {
           const pageUrl = urlWithTrackingParams({
@@ -102,8 +102,8 @@ function SearchResultsProducts({
   }
 
   return (
-    <div className="search-result">
-      <h2>Products</h2>
+    <div>
+      <h2 className="heading-headline">Products</h2>
       <Pagination connection={products}>
         {({nodes, isLoading, NextLink, PreviousLink}) => {
           const ItemsMarkup = nodes.map((product) => {
@@ -117,13 +117,17 @@ function SearchResultsProducts({
             const image = product?.selectedOrFirstAvailableVariant?.image;
 
             return (
-              <div className="search-results-item" key={product.id}>
-                <Link prefetch="intent" to={productUrl}>
+              <div key={product.id}>
+                <Link
+                  className="relative flex gap-4 mt-4"
+                  prefetch="intent"
+                  to={productUrl}
+                >
                   {image && (
                     <Image data={image} alt={product.title} width={50} />
                   )}
                   <div>
-                    <p>{product.title}</p>
+                    <p className="heading-title">{product.title}</p>
                     <small>{price && <Money data={price} />}</small>
                   </div>
                 </Link>
@@ -157,5 +161,5 @@ function SearchResultsProducts({
 }
 
 function SearchResultsEmpty() {
-  return <p>No results, try a different search.</p>;
+  return <p className="mt-8">No results, try a different search.</p>;
 }

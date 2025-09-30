@@ -17,7 +17,7 @@ export function Footer({
     <Suspense>
       <Await resolve={footerPromise}>
         {(footer) => (
-          <footer className="footer bg-primary text-secondary">
+          <footer className="text-secondary bg-primary border-t border-t-secondary h-footer max-w-container mx-auto flex items-center justify-center">
             {footer?.menu && header.shop.primaryDomain?.url && (
               <FooterMenu
                 menu={footer.menu}
@@ -42,7 +42,7 @@ function FooterMenu({
   publicStoreDomain: string;
 }) {
   return (
-    <nav className="footer-menu" role="navigation">
+    <nav className="flex flex-wrap justify-center gap-4 p-4" role="navigation">
       {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
         if (!item.url) return null;
         // if the url is internal, we strip the domain
@@ -59,10 +59,14 @@ function FooterMenu({
           </a>
         ) : (
           <NavLink
+            className={({isActive}) =>
+              (isActive ? 'active text-accent-1' : 'text-secondary') +
+              ' underlined-link'
+            }
             end
             key={item.id}
             prefetch="intent"
-            style={activeLinkStyle}
+            // style={activeLinkStyle}
             to={url}
           >
             {item.title}

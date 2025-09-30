@@ -75,15 +75,21 @@ function FeaturedCollection({
   const image = collection?.image;
   return (
     <Link
-      className="featured-collection"
+      className="block relative h-[500px] overflow-clip"
       to={`/collections/${collection.handle}`}
     >
       {image && (
-        <div className="featured-collection-image">
-          <Image data={image} sizes="100vw" />
+        <div className="relative w-full h-full">
+          <Image
+            className="w-full h-full object-cover"
+            data={image}
+            sizes="100vw"
+          />
         </div>
       )}
-      <h1>{collection.title}</h1>
+      <h1 className="heading-display absolute bottom-0 left-4">
+        {collection.title}
+      </h1>
     </Link>
   );
 }
@@ -94,12 +100,14 @@ function RecommendedProducts({
   products: Promise<RecommendedProductsQuery | null>;
 }) {
   return (
-    <div className="recommended-products">
-      <h2>Recommended Products</h2>
+    <div className="mt-24">
+      <h2 className="text-title-small md:text-title-medium lg:text-title-large mb-4">
+        Recommended Products
+      </h2>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
-            <div className="recommended-products-grid">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
               {response
                 ? response.products.nodes.map((product) => (
                     <ProductItem key={product.id} product={product} />

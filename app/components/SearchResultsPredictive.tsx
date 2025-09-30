@@ -80,6 +80,7 @@ SearchResultsPredictive.Products = SearchResultsPredictiveProducts;
 SearchResultsPredictive.Queries = SearchResultsPredictiveQueries;
 SearchResultsPredictive.Empty = SearchResultsPredictiveEmpty;
 
+// ARTICLES RESULTS
 function SearchResultsPredictiveArticles({
   term,
   articles,
@@ -88,9 +89,9 @@ function SearchResultsPredictiveArticles({
   if (!articles.length) return null;
 
   return (
-    <div className="predictive-search-result" key="articles">
+    <div key="articles">
       <h5>Articles</h5>
-      <ul>
+      <ul className="flex flex-col gap-4">
         {articles.map((article) => {
           const articleUrl = urlWithTrackingParams({
             baseUrl: `/blogs/${article.blog.handle}/${article.handle}`,
@@ -99,8 +100,13 @@ function SearchResultsPredictiveArticles({
           });
 
           return (
-            <li className="predictive-search-result-item" key={article.id}>
-              <Link onClick={closeSearch} to={articleUrl}>
+            // SEARCH RESULT ITEM
+            <li key={article.id}>
+              <Link
+                className="flex gap-4"
+                onClick={closeSearch}
+                to={articleUrl}
+              >
                 {article.image?.url && (
                   <Image
                     alt={article.image.altText ?? ''}
@@ -121,6 +127,7 @@ function SearchResultsPredictiveArticles({
   );
 }
 
+// COLLECTIONS RESULTS
 function SearchResultsPredictiveCollections({
   term,
   collections,
@@ -129,9 +136,9 @@ function SearchResultsPredictiveCollections({
   if (!collections.length) return null;
 
   return (
-    <div className="predictive-search-result" key="collections">
+    <div key="collections">
       <h5>Collections</h5>
-      <ul>
+      <ul className="flex flex-col gap-4">
         {collections.map((collection) => {
           const collectionUrl = urlWithTrackingParams({
             baseUrl: `/collections/${collection.handle}`,
@@ -140,8 +147,13 @@ function SearchResultsPredictiveCollections({
           });
 
           return (
-            <li className="predictive-search-result-item" key={collection.id}>
-              <Link onClick={closeSearch} to={collectionUrl}>
+            // SEARCH RESULT ITEM
+            <li key={collection.id}>
+              <Link
+                className="flex gap-4"
+                onClick={closeSearch}
+                to={collectionUrl}
+              >
                 {collection.image?.url && (
                   <Image
                     alt={collection.image.altText ?? ''}
@@ -162,6 +174,7 @@ function SearchResultsPredictiveCollections({
   );
 }
 
+// PAGES RESULTS
 function SearchResultsPredictivePages({
   term,
   pages,
@@ -170,9 +183,9 @@ function SearchResultsPredictivePages({
   if (!pages.length) return null;
 
   return (
-    <div className="predictive-search-result" key="pages">
+    <div key="pages">
       <h5>Pages</h5>
-      <ul>
+      <ul className="flex flex-col gap-4">
         {pages.map((page) => {
           const pageUrl = urlWithTrackingParams({
             baseUrl: `/pages/${page.handle}`,
@@ -181,8 +194,9 @@ function SearchResultsPredictivePages({
           });
 
           return (
-            <li className="predictive-search-result-item" key={page.id}>
-              <Link onClick={closeSearch} to={pageUrl}>
+            // SEARCH RESULT ITEM
+            <li key={page.id}>
+              <Link className="flex gap-4" onClick={closeSearch} to={pageUrl}>
                 <div>
                   <span>{page.title}</span>
                 </div>
@@ -195,6 +209,7 @@ function SearchResultsPredictivePages({
   );
 }
 
+// PRODUCTS RESULTS
 function SearchResultsPredictiveProducts({
   term,
   products,
@@ -203,9 +218,9 @@ function SearchResultsPredictiveProducts({
   if (!products.length) return null;
 
   return (
-    <div className="predictive-search-result" key="products">
-      <h5>Products</h5>
-      <ul>
+    <div key="products">
+      <h5 className="my-4">Products</h5>
+      <ul className="flex flex-col gap-4">
         {products.map((product) => {
           const productUrl = urlWithTrackingParams({
             baseUrl: `/products/${product.handle}`,
@@ -216,8 +231,13 @@ function SearchResultsPredictiveProducts({
           const price = product?.selectedOrFirstAvailableVariant?.price;
           const image = product?.selectedOrFirstAvailableVariant?.image;
           return (
-            <li className="predictive-search-result-item" key={product.id}>
-              <Link to={productUrl} onClick={closeSearch}>
+            // SEARCH RESULT ITEM
+            <li key={product.id}>
+              <Link
+                className="flex gap-4"
+                to={productUrl}
+                onClick={closeSearch}
+              >
                 {image && (
                   <Image
                     alt={image.altText ?? ''}

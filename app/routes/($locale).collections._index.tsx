@@ -47,10 +47,10 @@ export default function Collections() {
 
   return (
     <div className="collections">
-      <h1>Collections</h1>
+      <h1 className="heading-display">Collections</h1>
       <PaginatedResourceSection
         connection={collections}
-        resourcesClassName="collections-grid"
+        resourcesClassName="grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(var(--grid-item-width),1fr))] mb-8"
       >
         {({node: collection, index}) => (
           <CollectionItem
@@ -80,8 +80,8 @@ function CollectionItem({
     >
       {collection?.image && (
         <Image
+          className="h-auto aspect-square"
           alt={collection.image.altText || collection.title}
-          aspectRatio="1/1"
           data={collection.image}
           loading={index < 3 ? 'eager' : undefined}
           sizes="(min-width: 45em) 400px, 100vw"

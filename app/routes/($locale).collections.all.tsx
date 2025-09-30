@@ -51,10 +51,10 @@ export default function Collection() {
 
   return (
     <div className="collection">
-      <h1>Products</h1>
+      <h1 className="heading-display">Products</h1>
       <PaginatedResourceSection
         connection={products}
-        resourcesClassName="products-grid"
+        resourcesClassName="grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(var(--grid-item-width),1fr))] mb-8"
       >
         {({node: product, index}) => (
           <ProductItem

@@ -70,8 +70,10 @@ export default function Blog() {
 
   return (
     <div className="blog">
-      <h1>{blog.title}</h1>
-      <div className="blog-grid">
+      <h1 className="heading-display">{blog.title}</h1>
+
+      {/* BLOG GRID */}
+      <div className="grid gap-6 mb-8 [grid-template-columns:repeat(auto-fit,minmax(var(--grid-item-width),1fr))]">
         <PaginatedResourceSection connection={articles}>
           {({node: article, index}) => (
             <ArticleItem
@@ -102,10 +104,10 @@ function ArticleItem({
     <div className="blog-article" key={article.id}>
       <Link to={`/blogs/${article.blog.handle}/${article.handle}`}>
         {article.image && (
-          <div className="blog-article-image">
+          <div className="block aspect-3/2 relative">
             <Image
               alt={article.image.altText || article.title}
-              aspectRatio="3/2"
+              className="h-full"
               data={article.image}
               loading={loading}
               sizes="(min-width: 768px) 50vw, 100vw"

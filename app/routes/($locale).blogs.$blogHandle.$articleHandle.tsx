@@ -81,15 +81,22 @@ export default function Article() {
 
   return (
     <div className="article">
-      <h1>
-        {title}
-        <div>
-          <time dateTime={article.publishedAt}>{publishedDate}</time> &middot;{' '}
-          <address>{author?.name}</address>
-        </div>
-      </h1>
+      <div>
+        <time dateTime={article.publishedAt}>{publishedDate}</time>
+        {/* <address>{author?.name}</address> */}
+      </div>
+      <h1 className="heading-headline mb-4">{title}</h1>
 
-      {image && <Image data={image} sizes="90vw" loading="eager" />}
+      {image && (
+        <div className="w-full h-[500px] mb-8 overflow-clip">
+          <Image
+            className="h-full w-full object-cover"
+            data={image}
+            sizes="90vw"
+            loading="eager"
+          />
+        </div>
+      )}
       <div
         dangerouslySetInnerHTML={{__html: contentHtml}}
         className="article"

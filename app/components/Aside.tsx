@@ -33,45 +33,70 @@ export function Aside({
   heading: React.ReactNode;
 }) {
   const {type: activeType, close} = useAside();
-  const expanded = type === activeType;
 
   useEffect(() => {
     const abortController = new AbortController();
 
-    if (expanded) {
-      document.addEventListener(
-        'keydown',
-        function handler(event: KeyboardEvent) {
-          if (event.key === 'Escape') {
-            close();
-          }
-        },
-        {signal: abortController.signal},
-      );
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        close();
+      }
     }
+
+    function handleClickOutside(event: MouseEvent) {
+      const asideElement = document.querySelector('aside');
+      if (
+        type === activeType &&
+        asideElement &&
+        !asideElement.contains(event.target as Node)
+      ) {
+        close();
+      }
+    }
+
+    if (type === activeType) {
+      document.addEventListener('keydown', handleKeyDown, {
+        signal: abortController.signal,
+      });
+      // TODO: Fix this – doesn't work on search
+      // document.addEventListener('mousedown', handleClickOutside, {
+      //   signal: abortController.signal,
+      // });
+    }
+
     return () => abortController.abort();
-  }, [close, expanded]);
+  }, [close, type, activeType]);
 
   return (
+    // OVERLAY
     <div
       aria-modal
-      className={`overlay bg-primary/30 ${expanded ? 'expanded' : ''}`}
+      className={`fixed inset-0 transition-opacity duration-400 z-50 bg-primary/50 ${type === activeType ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
       role="dialog"
     >
-      <button className="close-outside" onClick={close} />
-      <aside className="bg-secondary">
-        <header>
-          <h3>{heading}</h3>
-          <button className="close reset" onClick={close} aria-label="Close">
+      {/* ASIDE */}
+      <aside
+        className={`bg-primary w-aside fixed border-l border-l-secondary top-0 right-0 h-screen transition-transform duration-200 ease-in-out shadow-2xl p-4 ${type === activeType ? 'translate-x-0' : 'translate-x-full'}`}
+      >
+        <header className="flex items-center justify-between h-16 border-b border-secondary">
+          <h3 className="text-headline-small md:text-headline-medium lg:text-headline-large">
+            {heading}
+          </h3>
+          <button
+            className="transition-opacity hover:opacity-50"
+            onClick={close}
+            aria-label="Close"
+          >
             &times;
           </button>
         </header>
-        <main>{children}</main>
+        <main className="mt-8">{children}</main>
       </aside>
     </div>
   );
 }
 
+// ASIDE CONTEXT
 const AsideContext = createContext<AsideContextValue | null>(null);
 
 Aside.Provider = function AsideProvider({children}: {children: ReactNode}) {

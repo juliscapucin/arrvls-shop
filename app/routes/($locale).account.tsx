@@ -39,7 +39,7 @@ export default function AccountLayout() {
 
   return (
     <div className="account">
-      <h1>{heading}</h1>
+      <h1 className="heading-display">{heading}</h1>
       <br />
       <AccountMenu />
       <br />
@@ -84,7 +84,7 @@ function AccountMenu() {
 
 function Logout() {
   return (
-    <Form className="account-logout" method="POST" action="/account/logout">
+    <Form className="inline-block" method="POST" action="/account/logout">
       &nbsp;<button type="submit">Sign out</button>
     </Form>
   );

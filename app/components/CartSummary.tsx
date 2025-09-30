@@ -11,12 +11,14 @@ type CartSummaryProps = {
 
 export function CartSummary({cart, layout}: CartSummaryProps) {
   const className =
-    layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
+    layout === 'page'
+      ? 'relative'
+      : 'absolute left-4 right-4 bottom-0 border-t border-t-secondary pt-4 space-y-2';
 
   return (
-    <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
-      <dl className="cart-subtotal">
+    <div aria-label="Cart summary" className={className}>
+      <h4 className="heading-title">Totals</h4>
+      <dl className="flex gap-2">
         <dt>Subtotal</dt>
         <dd>
           {cart.cost?.subtotalAmount?.amount ? (
@@ -32,12 +34,18 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
     </div>
   );
 }
+
+// CHECKOUT BUTTON
 function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
   if (!checkoutUrl) return null;
 
   return (
     <div>
-      <a href={checkoutUrl} target="_self">
+      <a
+        className="btn-secondary block mt-4 w-fit m-auto"
+        href={checkoutUrl}
+        target="_self"
+      >
         <p>Continue to Checkout &rarr;</p>
       </a>
       <br />
@@ -45,6 +53,7 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
   );
 }
 
+// DISCOUNTS
 function CartDiscounts({
   discountCodes,
 }: {
@@ -76,7 +85,9 @@ function CartDiscounts({
         <div>
           <input type="text" name="discountCode" placeholder="Discount code" />
           &nbsp;
-          <button type="submit">Apply</button>
+          <button className="btn-ghost" type="submit">
+            Apply
+          </button>
         </div>
       </UpdateDiscountForm>
     </div>
@@ -103,6 +114,7 @@ function UpdateDiscountForm({
   );
 }
 
+// GIFT CARDS
 function CartGiftCard({
   giftCardCodes,
 }: {
@@ -154,7 +166,9 @@ function CartGiftCard({
             ref={giftCardCodeInput}
           />
           &nbsp;
-          <button type="submit">Apply</button>
+          <button className="btn-ghost" type="submit">
+            Apply
+          </button>
         </div>
       </UpdateGiftCardForm>
     </div>
