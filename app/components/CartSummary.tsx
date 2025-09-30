@@ -18,7 +18,9 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
   return (
     <div aria-label="Cart summary" className={className}>
       <h4 className="heading-title">Totals</h4>
-      <dl className="flex gap-2">
+
+      {/* SUBTOTAL */}
+      <dl className="flex gap-2 border-b pb-4">
         <dt>Subtotal</dt>
         <dd>
           {cart.cost?.subtotalAmount?.amount ? (
@@ -28,9 +30,15 @@ export function CartSummary({cart, layout}: CartSummaryProps) {
           )}
         </dd>
       </dl>
-      <CartDiscounts discountCodes={cart.discountCodes} />
-      <CartGiftCard giftCardCodes={cart.appliedGiftCards} />
-      <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
+
+      {/* DISCOUNTS / GIFT CARDS */}
+      <div className="flex flex-col gap-2">
+        <CartDiscounts discountCodes={cart.discountCodes} />
+        <CartGiftCard giftCardCodes={cart.appliedGiftCards} />
+
+        {/* CHECKOUT BUTTON */}
+        <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
+      </div>
     </div>
   );
 }
@@ -53,7 +61,7 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl?: string}) {
   );
 }
 
-// DISCOUNTS
+// CART DISCOUNT
 function CartDiscounts({
   discountCodes,
 }: {
@@ -68,13 +76,13 @@ function CartDiscounts({
     <div>
       {/* Have existing discount, display it with a remove option */}
       <dl hidden={!codes.length}>
-        <div>
-          <dt>Discount(s)</dt>
+        <div className="w-full border-b pb-4">
+          <dt className="mb-4">Discount(s)</dt>
           <UpdateDiscountForm>
-            <div className="cart-discount">
+            <div className="flex gap-2">
               <code>{codes?.join(', ')}</code>
-              &nbsp;
-              <button>Remove</button>
+
+              <button className="btn-ghost">Remove</button>
             </div>
           </UpdateDiscountForm>
         </div>
@@ -82,9 +90,14 @@ function CartDiscounts({
 
       {/* Show an input to apply a discount */}
       <UpdateDiscountForm discountCodes={codes}>
-        <div>
-          <input type="text" name="discountCode" placeholder="Discount code" />
-          &nbsp;
+        <div className="mt-4 flex gap-2">
+          <input
+            className="input-primary flex-1"
+            type="text"
+            name="discountCode"
+            placeholder="Discount code"
+          />
+
           <button className="btn-ghost" type="submit">
             Apply
           </button>
@@ -146,7 +159,6 @@ function CartGiftCard({
           <UpdateGiftCardForm>
             <div className="cart-discount">
               <code>{codes?.join(', ')}</code>
-              &nbsp;
               <button onSubmit={() => removeAppliedCode}>Remove</button>
             </div>
           </UpdateGiftCardForm>
@@ -158,14 +170,14 @@ function CartGiftCard({
         giftCardCodes={appliedGiftCardCodes.current}
         saveAppliedCode={saveAppliedCode}
       >
-        <div>
+        <div className="flex gap-2">
           <input
+            className="input-primary flex-1"
             type="text"
             name="giftCardCode"
             placeholder="Gift card code"
             ref={giftCardCodeInput}
           />
-          &nbsp;
           <button className="btn-ghost" type="submit">
             Apply
           </button>
