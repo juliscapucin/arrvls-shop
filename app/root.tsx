@@ -1,15 +1,15 @@
 import {Analytics, getShopAnalytics, useNonce} from '@shopify/hydrogen';
-import {type LoaderFunctionArgs} from '@shopify/remix-oxygen';
 import {
   Outlet,
   useRouteError,
   isRouteErrorResponse,
-  type ShouldRevalidateFunction,
   Links,
   Meta,
   Scripts,
   ScrollRestoration,
   useRouteLoaderData,
+  type LoaderFunctionArgs,
+  type ShouldRevalidateFunction,
 } from 'react-router';
 import favicon from '~/assets/favicon.svg';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
