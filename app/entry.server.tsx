@@ -15,7 +15,12 @@ export default async function handleRequest(
   context: HydrogenRouterContextProvider,
 ) {
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
-    connectSrc: ["'self'", 'https://knottier-trudi-chondral.ngrok-free.dev/'],
+    connectSrc: [
+      // Local tunnel (only in dev)
+      ...(process.env.NODE_ENV === 'development'
+        ? [`wss://${process.env.NGROK_DOMAIN}:*`]
+        : []),
+    ],
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,

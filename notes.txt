@@ -5,3 +5,11 @@ had to remove "dev": "react-router typegen --watch && shopify hydrogen dev --cod
 
 when updating, remove node-modules and .hydrogen and everything before doing it.
 instructions come on .hydrogen folder
+
+-
+
+to set up authentication out of the box, get url from Settings > Customer Accounts > URL 
+(ex. https://shopify.com/12345657736/account)
+add this url to header sign in link
+
+-
