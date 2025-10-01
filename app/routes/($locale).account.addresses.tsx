@@ -5,14 +5,12 @@ import type {
 } from 'customer-accountapi.generated';
 import {
   data,
-  type ActionFunctionArgs,
-  type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
-import {
   Form,
   useActionData,
   useNavigation,
   useOutletContext,
+  type ActionFunctionArgs,
+  type LoaderFunctionArgs,
   type MetaFunction,
   type Fetcher,
 } from 'react-router';

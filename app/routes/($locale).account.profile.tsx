@@ -3,14 +3,12 @@ import type {CustomerUpdateInput} from '@shopify/hydrogen/customer-account-api-t
 import {CUSTOMER_UPDATE_MUTATION} from '~/graphql/customer-account/CustomerUpdateMutation';
 import {
   data,
-  type ActionFunctionArgs,
-  type LoaderFunctionArgs,
-} from '@shopify/remix-oxygen';
-import {
   Form,
   useActionData,
   useNavigation,
   useOutletContext,
+  type ActionFunctionArgs,
+  type LoaderFunctionArgs,
   type MetaFunction,
 } from 'react-router';
 
