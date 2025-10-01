@@ -1,0 +1,7 @@
+on package.json
+had to remove "dev": "react-router typegen --watch && shopify hydrogen dev --codegen", from dev build 
+
+-
+
+when updating, remove node-modules and .hydrogen and everything before doing it.
+instructions come on .hydrogen folder

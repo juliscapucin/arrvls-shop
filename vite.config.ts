@@ -33,4 +33,8 @@ export default defineConfig({
       include: ['typographic-base'],
     },
   },
+  server: {
+    host: true,
+    allowedHosts: ['knottier-trudi-chondral.ngrok-free.dev'],
+  },
 });

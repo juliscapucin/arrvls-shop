@@ -139,7 +139,7 @@ function HeaderCtas({
       {/* ACCOUNT */}
       <NavLink
         prefetch="intent"
-        to="/account"
+        to="/account/authorize"
         className={({isActive}) =>
           (isActive ? 'active text-secondary/50' : 'text-secondary') +
           ' underlined-link'

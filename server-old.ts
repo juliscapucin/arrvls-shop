@@ -40,6 +40,12 @@ export default {
         AppSession.init(request, [env.SESSION_SECRET]),
       ]);
 
+      const hydrogenContext = await createHydrogenRouterContext(
+        request,
+        env,
+        executionContext,
+      );
+
       /**
        * Create Hydrogen's Storefront client.
        */
@@ -81,6 +87,7 @@ export default {
         build: await import('virtual:react-router/server-build'),
         mode: process.env.NODE_ENV,
         getLoadContext: () => ({
+          ...hydrogenContext,
           session,
           waitUntil,
           storefront,
@@ -92,8 +99,11 @@ export default {
 
       const response = await handleRequest(request);
 
-      if (session.isPending) {
-        response.headers.set('Set-Cookie', await session.commit());
+      if (hydrogenContext.session.isPending) {
+        response.headers.set(
+          'Set-Cookie',
+          await hydrogenContext.session.commit(),
+        );
       }
 
       if (response.status === 404) {
@@ -102,12 +112,15 @@ export default {
          * If the redirect doesn't exist, then `storefrontRedirect`
          * will pass through the 404 response.
          */
-        return storefrontRedirect({request, response, storefront});
+        return storefrontRedirect({
+          request,
+          response,
+          storefront: hydrogenContext.storefront,
+        });
       }
 
       return response;
     } catch (error) {
-      // eslint-disable-next-line no-console
       console.error(error);
       return new Response('An unexpected error occurred', {status: 500});
     }
