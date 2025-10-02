@@ -256,7 +256,7 @@ export default function Addresses() {
 
   return (
     <div className="account-addresses">
-      <h2>Addresses</h2>
+      <h2>Addresses 999</h2>
       <br />
       {!addresses.nodes.length ? (
         <p>You have no addresses saved.</p>

@@ -68,7 +68,7 @@ function OrdersTable({orders}: Pick<CustomerOrdersFragment, 'orders'>) {
 function EmptyOrders() {
   return (
     <div>
-      <p>You haven&apos;t placed any orders yet.</p>
+      <p>You haven&apos;t placed any orders yet 999.</p>
       <br />
       <p>
         <Link to="/collections">Start Shopping →</Link>
