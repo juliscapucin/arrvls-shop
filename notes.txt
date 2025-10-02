@@ -13,6 +13,12 @@ instructions come on .hydrogen folder
 
 -
 
+rm -rf node_modules package-lock.json
+npm cache clean --force
+npm install
+
+-
+
 to set up authentication out of the box, get url from Settings > Customer Accounts > URL 
 (ex. https://shopify.com/12345657736/account)
 add this url to header sign in link
