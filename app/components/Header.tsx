@@ -139,7 +139,7 @@ function HeaderCtas({
       {/* ACCOUNT */}
       <NavLink
         prefetch="intent"
-        to="/account"
+        to="https://shopify.com/99239657736/account"
         className={({isActive}) =>
           (isActive ? 'active text-secondary/50' : 'text-secondary') +
           ' underlined-link'
