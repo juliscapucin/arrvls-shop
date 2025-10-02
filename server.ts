@@ -15,7 +15,6 @@ import {
 } from '@shopify/hydrogen';
 
 import {AppSession} from '~/lib/session';
-import {getLocaleFromRequest} from '~/lib/utils';
 
 /**
  * Export a fetch handler in module format.

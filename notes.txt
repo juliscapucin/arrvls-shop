@@ -24,6 +24,11 @@ https://github.com/Shopify/hydrogen/tree/main/templates/skeleton
 
 -
 
+Deploy on Vercel
+https://truestorefront.com/blog/how-to-deploy-shopify-hydrogen-2-to-vercel 
+
+-
+
 Hydrogen Cookbook (a collection of example recipes to showcase specific scenarios and usecases for Hydrogen projects)
 https://github.com/Shopify/hydrogen/tree/main/cookbook 
 
