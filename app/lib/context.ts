@@ -39,6 +39,9 @@ export async function createHydrogenRouterContext(
       cart: {
         queryFragment: CART_QUERY_FRAGMENT,
       },
+      customerAccount: {
+        authUrl: env.PUBLIC_CUSTOMER_ACCOUNT_API_URL,
+      },
     },
     additionalContext,
   );
@@ -77,6 +80,9 @@ export async function createAppLoadContext(
     i18n: getLocaleFromRequest(request),
     cart: {
       queryFragment: CART_QUERY_FRAGMENT,
+    },
+    customerAccount: {
+      authUrl: env.PUBLIC_CUSTOMER_ACCOUNT_API_URL,
     },
   });
 

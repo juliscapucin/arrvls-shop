@@ -4,10 +4,13 @@
 
 :root {
   --primary: oklch(22.931% 0.04172 147.508);
+  /* --primary-hex: #1a2a22; */
   --primary-light: oklch(27.848% 0.01243 107.228);
   --primary-accent: oklch(37.371% 0.09092 146.316);
   --secondary: oklch(82.516% 0.00669 16.522);
+  /* --secondary-hex: #d7d7d2; */
   --accent-1: oklch(59.077% 0.13363 274.229);
+  /* --accent-1: #7b4fff; */
   --accent-2: oklch(55.36% 0.14248 51.912);
 
   --font-acma: 'PPAcma', sans-serif;
