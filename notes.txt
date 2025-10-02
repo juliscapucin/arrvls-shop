@@ -1,3 +1,8 @@
+
+Pitfalls I encountered when setting up / updating my Hydrogen 2025.7.0 Storefront
+
+-
+
 on package.json
 had to remove "dev": "react-router typegen --watch && shopify hydrogen dev --codegen", from dev build 
 
@@ -13,3 +18,16 @@ to set up authentication out of the box, get url from Settings > Customer Accoun
 add this url to header sign in link
 
 -
+
+Skeleton shop (2025.7.0)
+https://github.com/Shopify/hydrogen/tree/main/templates/skeleton 
+
+-
+
+Hydrogen Cookbook (a collection of example recipes to showcase specific scenarios and usecases for Hydrogen projects)
+https://github.com/Shopify/hydrogen/tree/main/cookbook 
+
+-
+
+Example shop (outdated setup)
+https://github.com/Shopify/hydrogen 

@@ -30,11 +30,10 @@ export default defineConfig({
        * Include 'example-dep' in the array below.
        * @see https://vitejs.dev/config/dep-optimization-options
        */
-      include: ['typographic-base'],
+      include: ['set-cookie-parser', 'cookie', 'react-router'],
     },
   },
   server: {
-    host: true,
     allowedHosts: ['knottier-trudi-chondral.ngrok-free.dev'],
   },
 });
