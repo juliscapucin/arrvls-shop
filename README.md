@@ -15,7 +15,7 @@ A modern headless commerce storefront built with Shopify Hydrogen, featuring a c
 
 ## Features
 
-- 🛍️ **Full Shopify Integration**: Products, collections, cart, and customer accounts
+- 🛍️ **Shopify Integration**: Products, collections, cart, and customer accounts
 - 🎨 **Custom Design System**: Tailwind-based component library with branded styling
 - ✨ **Smooth Animations**: GSAP-powered interactions and transitions
 - 📱 **Responsive Design**: Mobile-first approach with desktop enhancements
