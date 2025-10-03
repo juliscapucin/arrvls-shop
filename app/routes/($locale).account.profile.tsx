@@ -89,7 +89,6 @@ export default function AccountProfile() {
   return (
     <div>
       <h2 className="heading-headline">My profile</h2>
-      <br />
       <Form method="PUT">
         <legend>Personal information</legend>
         <fieldset className="space-x-2 mt-8">
@@ -118,16 +117,18 @@ export default function AccountProfile() {
             minLength={2}
           />
         </fieldset>
-        {action?.error ? (
+        {action?.error && (
           <p>
             <mark>
               <small>{action.error}</small>
             </mark>
           </p>
-        ) : (
-          <br />
         )}
-        <button type="submit" disabled={state !== 'idle'}>
+        <button
+          className="block btn-secondary mx-auto"
+          type="submit"
+          disabled={state !== 'idle'}
+        >
           {state !== 'idle' ? 'Updating' : 'Update'}
         </button>
       </Form>

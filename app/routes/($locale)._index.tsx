@@ -10,8 +10,10 @@ import {Image, Money} from '@shopify/hydrogen';
 import type {
   FeaturedCollectionFragment,
   RecommendedProductsQuery,
+  ProductFragment,
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
+import Showreel from '~/components/addons/Showreel';
 
 export const meta: MetaFunction = () => {
   return [{title: 'ARRVLS | Home'}];
@@ -32,13 +34,14 @@ export async function loader(args: LoaderFunctionArgs) {
  * needed to render the page. If it's unavailable, the whole page should 400 or 500 error.
  */
 async function loadCriticalData({context}: LoaderFunctionArgs) {
-  const [{collection}] = await Promise.all([
+  const [featured, showreel] = await Promise.all([
     context.storefront.query(FEATURED_COLLECTION_QUERY),
-    // Add other queries here, so that they are loaded in parallel
+    context.storefront.query(HOME_SHOWREEL_QUERY),
   ]);
 
   return {
-    featuredCollection: collection,
+    featuredCollection: featured.collection,
+    homeShowreel: showreel.collection,
   };
 }
 
@@ -49,7 +52,7 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
  */
 function loadDeferredData({context}: LoaderFunctionArgs) {
   const recommendedProducts = context.storefront
-    .query(RECOMMENDED_PRODUCTS_QUERY)
+    .query(FEATURED_PRODUCTS_QUERY)
     .catch((error) => {
       // Log query errors, but don't throw them so the page can still render
       console.error(error);
@@ -63,10 +66,18 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
+
+  const showreelImages = data.homeShowreel?.products.nodes.flatMap(
+    (product: any) => product.images.nodes,
+  );
+
+  console.log(showreelImages);
+
   return (
     <div className="home">
+      <Showreel showreelImages={showreelImages || []} />
       <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} />
+      <FeaturedProducts products={data.recommendedProducts} />
     </div>
   );
 }
@@ -80,7 +91,7 @@ function FeaturedCollection({
   const image = collection?.image;
   return (
     <Link
-      className="block relative h-[500px] overflow-clip"
+      className="block relative h-[700px] md:h-[800px] overflow-clip"
       to={`/collections/${collection.handle}`}
     >
       {image && (
@@ -92,14 +103,14 @@ function FeaturedCollection({
           />
         </div>
       )}
-      <h1 className="heading-display absolute bottom-0 left-4">
+      <h1 className="heading-display absolute bottom-0 left-4 mix-blend-difference">
         {collection.title}
       </h1>
     </Link>
   );
 }
 
-function RecommendedProducts({
+function FeaturedProducts({
   products,
 }: {
   products: Promise<RecommendedProductsQuery | null>;
@@ -107,7 +118,7 @@ function RecommendedProducts({
   return (
     <div className="mt-24">
       <h2 className="text-title-small md:text-title-medium lg:text-title-large mb-4">
-        Recommended Products
+        Featured
       </h2>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
@@ -148,7 +159,34 @@ const FEATURED_COLLECTION_QUERY = `#graphql
   }
 ` as const;
 
-const RECOMMENDED_PRODUCTS_QUERY = `#graphql
+const HOME_SHOWREEL_QUERY = `#graphql
+  fragment ShowreelProduct on Product {
+    images(first: 10) {
+      nodes {
+        id
+        url
+        altText
+        width
+        height
+      }
+    }
+  }
+
+  query HomeShowreel($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+    collection(handle: "home-showreel") {
+      id
+      title
+      products(first: 20) {
+        nodes {
+          ...ShowreelProduct
+        }
+      }
+    }
+  }
+` as const;
+
+const FEATURED_PRODUCTS_QUERY = `#graphql
   fragment RecommendedProduct on Product {
     id
     title
@@ -169,7 +207,7 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   }
   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
-    products(first: 8, sortKey: UPDATED_AT, reverse: true) {
+    products(first: 6, sortKey: UPDATED_AT, reverse: true) {
       nodes {
         ...RecommendedProduct
       }
