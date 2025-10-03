@@ -87,14 +87,15 @@ export default function AccountProfile() {
   const customer = action?.customer ?? account?.customer;
 
   return (
-    <div className="account-profile">
-      <h2>My profile 999</h2>
+    <div>
+      <h2 className="heading-headline">My profile</h2>
       <br />
       <Form method="PUT">
         <legend>Personal information</legend>
-        <fieldset>
+        <fieldset className="space-x-2 mt-8">
           <label htmlFor="firstName">First name</label>
           <input
+            className="input-primary"
             id="firstName"
             name="firstName"
             type="text"
@@ -106,6 +107,7 @@ export default function AccountProfile() {
           />
           <label htmlFor="lastName">Last name</label>
           <input
+            className="input-primary"
             id="lastName"
             name="lastName"
             type="text"

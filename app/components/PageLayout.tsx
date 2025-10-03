@@ -45,7 +45,7 @@ export function PageLayout({
           publicStoreDomain={publicStoreDomain}
         />
       )}
-      <main className="max-w-container mx-auto p-4 md:p-8 min-h-full">
+      <main className="max-w-container mx-auto p-4 md:p-8 2xl:px-0 min-h-full">
         {children}
       </main>
       <Footer

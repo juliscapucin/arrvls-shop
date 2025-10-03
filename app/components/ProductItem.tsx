@@ -21,7 +21,7 @@ export function ProductItem({
   const image = product.featuredImage;
   return (
     <Link
-      className="h-auto w-full"
+      className="h-auto w-full mb-8"
       key={product.id}
       prefetch="intent"
       to={variantUrl}
@@ -35,7 +35,7 @@ export function ProductItem({
           sizes="(min-width: 45em) 400px, 100vw"
         />
       )}
-      <h4>{product.title}</h4>
+      <h4 className="heading-title mt-4">{product.title}</h4>
       <small>
         <Money data={product.priceRange.minVariantPrice} />
       </small>

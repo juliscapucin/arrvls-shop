@@ -63,8 +63,14 @@
 
   /* Heights based on Tailwind's spacing scale: --spacing: 0.25rem /* 4px */
   --height-header: calc(var(--spacing) * 32);
-  --height-footer: calc(var(--spacing) * 16);
+  --height-footer: calc(var(--spacing) * 24);
   --min-height-full: calc(100vh - var(--height-header) - var(--height-footer));
+  --min-height-full-mobile: calc(
+    100vh - var(--height-header) - var(--height-footer) - 2 * var(--spacing) * 4
+  );
+  --min-height-full-desktop: calc(
+    100vh - var(--height-header) - var(--height-footer) - 2 * var(--spacing) * 8
+  );
 
   /* Minimap dimensions */
   --minimap-width: 180px;
@@ -140,11 +146,11 @@
   }
 
   .btn-ghost {
-    @apply bg-transparent text-secondary font-medium py-2 px-4 border border-secondary transition-colors duration-300 hover:bg-secondary hover:text-primary;
+    @apply bg-transparent text-secondary font-medium py-2 px-4 border border-secondary transition-colors duration-300 hover:bg-secondary hover:text-primary flex items-center;
   }
 
   .btn-ghost-sm {
-    @apply bg-transparent text-secondary font-medium border border-secondary transition-colors duration-300 hover:bg-secondary hover:text-primary text-label-large py-[2px] px-2;
+    @apply bg-transparent text-secondary font-medium border border-secondary transition-colors duration-300 hover:bg-secondary hover:text-primary text-label-large py-[2px] px-2 flex items-center;
   }
 
   /* HEADING STYLES */

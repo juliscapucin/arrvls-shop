@@ -42,7 +42,10 @@ function FooterMenu({
   publicStoreDomain: string;
 }) {
   return (
-    <nav className="flex flex-wrap justify-center gap-4 p-4" role="navigation">
+    <nav
+      className="flex flex-wrap justify-center gap-4 px-4 md:px-8 2xl:px-0"
+      role="navigation"
+    >
       {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
         if (!item.url) return null;
         // if the url is internal, we strip the domain
@@ -60,7 +63,7 @@ function FooterMenu({
         ) : (
           <NavLink
             className={({isActive}) =>
-              (isActive ? 'active text-accent-1' : 'text-secondary') +
+              (isActive ? 'active text-secondary/50' : 'text-secondary') +
               ' underlined-link'
             }
             end

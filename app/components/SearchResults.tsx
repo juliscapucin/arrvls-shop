@@ -161,5 +161,9 @@ function SearchResultsProducts({
 }
 
 function SearchResultsEmpty() {
-  return <p className="mt-8">No results, try a different search.</p>;
+  return (
+    <p className="heading-title mt-16 text-center">
+      No results, try a different search.
+    </p>
+  );
 }

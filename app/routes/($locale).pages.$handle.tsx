@@ -70,7 +70,7 @@ export default function Page() {
         <h1 className="heading-display mt-8">{page.title}</h1>
       </header>
       <main
-        className="max-w-prose mt-8"
+        className="max-w-prose mt-16 [&>div>h3]:heading-headline [&>div>h3]:mt-8"
         dangerouslySetInnerHTML={{__html: page.body}}
       />
     </div>

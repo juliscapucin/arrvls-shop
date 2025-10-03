@@ -67,12 +67,12 @@ function OrdersTable({orders}: Pick<CustomerOrdersFragment, 'orders'>) {
 
 function EmptyOrders() {
   return (
-    <div>
-      <p>You haven&apos;t placed any orders yet 999.</p>
-      <br />
-      <p>
-        <Link to="/collections">Start Shopping →</Link>
-      </p>
+    <div className="flex flex-col gap-4 items-center justify-center mt-16">
+      <p className="heading-title">You haven&apos;t placed any orders yet.</p>
+
+      <Link className="btn-secondary w-fit" to="/collections">
+        Start Shopping →
+      </Link>
     </div>
   );
 }

@@ -37,16 +37,16 @@ export default function AccountLayout() {
   const heading = customer
     ? customer.firstName
       ? `Welcome, ${customer.firstName}`
-      : `Welcome to your account.`
+      : `Account`
     : 'Account Details';
 
   return (
-    <div className="account">
-      <h1 className="heading-display">{heading}</h1>
-      <br />
+    <div className="flex flex-col gap-4 min-h-full-mobile md:min-h-full-desktop">
       <AccountMenu />
-      <br />
-      <br />
+
+      <h1 className="heading-display">{heading}</h1>
+
+      {/* CONTENT */}
       <Outlet context={{customer}} />
     </div>
   );
@@ -60,26 +60,34 @@ function AccountMenu() {
     isActive: boolean;
     isPending: boolean;
   }) {
-    return {
-      fontWeight: isActive ? 'bold' : undefined,
-      color: isPending ? 'grey' : 'black',
-    };
+    return `${isActive ? 'font-bold' : ''} ${isPending ? 'opacity-50 pointer-events-none' : ''}`;
   }
 
   return (
-    <nav role="navigation">
-      <NavLink to="/account/orders" style={isActiveStyle}>
-        Orders 999 &nbsp;
-      </NavLink>
-      &nbsp;|&nbsp;
-      <NavLink to="/account/profile" style={isActiveStyle}>
-        &nbsp; Profile 999&nbsp;
-      </NavLink>
-      &nbsp;|&nbsp;
-      <NavLink to="/account/addresses" style={isActiveStyle}>
-        &nbsp; Addresses 999&nbsp;
-      </NavLink>
-      &nbsp;|&nbsp;
+    <nav className="flex justify-between" role="navigation">
+      <div className="flex gap-4">
+        <NavLink
+          to="/account/orders"
+          className={`underlined-link ${isActiveStyle}`}
+        >
+          Orders
+        </NavLink>
+
+        <NavLink
+          to="/account/profile"
+          className={`underlined-link ${isActiveStyle}`}
+        >
+          Profile
+        </NavLink>
+
+        <NavLink
+          to="/account/addresses"
+          className={`underlined-link ${isActiveStyle}`}
+        >
+          Addresses
+        </NavLink>
+      </div>
+
       <Logout />
     </nav>
   );
@@ -88,7 +96,7 @@ function AccountMenu() {
 function Logout() {
   return (
     <Form className="inline-block" method="POST" action="/account/logout">
-      &nbsp;<button type="submit">Sign out</button>
+      <button type="submit">Sign out →</button>
     </Form>
   );
 }

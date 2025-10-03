@@ -39,6 +39,6 @@ export default defineConfig({
     },
   },
   server: {
-    allowedHosts: ['knottier-trudi-chondral.ngrok-free.dev'],
+    allowedHosts: ['knottier-trudi-chondral.ngrok-free.dev', 'arrvls.studio'],
   },
 });

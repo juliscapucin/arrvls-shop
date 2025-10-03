@@ -43,38 +43,42 @@ export default function SearchPage() {
   return (
     <div>
       <h1 className="heading-display">Search</h1>
-      <SearchForm>
-        {({inputRef}) => (
-          <div className="flex flex-col">
-            <input
-              className="input-primary"
-              defaultValue={term}
-              name="q"
-              placeholder="Search…"
-              ref={inputRef}
-              type="search"
-            />
-            &nbsp;
-            <button className="btn-secondary" type="submit">
-              Search
-            </button>
-          </div>
-        )}
-      </SearchForm>
-      {error && <p style={{color: 'red'}}>{error}</p>}
-      {!term || !result?.total ? (
-        <SearchResults.Empty />
-      ) : (
-        <SearchResults result={result} term={term}>
-          {({articles, pages, products, term}) => (
-            <div className="mt-8">
-              <SearchResults.Products products={products} term={term} />
-              <SearchResults.Pages pages={pages} term={term} />
-              <SearchResults.Articles articles={articles} term={term} />
+      <div className="border-b py-16">
+        <SearchForm className="max-w-xl mx-auto">
+          {({inputRef}) => (
+            <div className="flex flex-col">
+              <input
+                className="input-primary"
+                defaultValue={term}
+                name="q"
+                placeholder="Search…"
+                ref={inputRef}
+                type="search"
+              />
+              &nbsp;
+              <button className="btn-secondary" type="submit">
+                Search
+              </button>
             </div>
           )}
-        </SearchResults>
-      )}
+        </SearchForm>
+      </div>
+      <div className="mx-auto max-w-xl">
+        {error && <p style={{color: 'red'}}>{error}</p>}
+        {!term || !result?.total ? (
+          <SearchResults.Empty />
+        ) : (
+          <SearchResults result={result} term={term}>
+            {({articles, pages, products, term}) => (
+              <div className="mt-8">
+                <SearchResults.Products products={products} term={term} />
+                <SearchResults.Pages pages={pages} term={term} />
+                <SearchResults.Articles articles={articles} term={term} />
+              </div>
+            )}
+          </SearchResults>
+        )}
+      </div>
       <Analytics.SearchView data={{searchTerm: term, searchResults: result}} />
     </div>
   );
