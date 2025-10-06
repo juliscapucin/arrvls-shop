@@ -5,7 +5,7 @@ import {useRef} from 'react';
 import GSAP from 'gsap';
 import {useGSAP} from '@gsap/react';
 import {Observer} from 'gsap/Observer';
-GSAP.registerPlugin(useGSAP, Observer);
+GSAP.registerPlugin(Observer);
 
 import {IconChevron} from '~/components/icons';
 
