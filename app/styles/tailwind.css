@@ -3,6 +3,8 @@
 @import './fonts.css';
 
 :root {
+  interpolate-size: allow-keywords; /* To animate auto-height on accordion component */
+
   --primary: oklch(22.931% 0.04172 147.508);
   /* --primary-hex: #1a2a22; */
   --primary-light: oklch(27.848% 0.01243 107.228);
