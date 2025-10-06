@@ -13,7 +13,7 @@ import type {
   ProductFragment,
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
-import Showreel from '~/components/addons/Showreel';
+import {Showreel, ScrollMarquee} from '~/components/addons';
 
 export const meta: MetaFunction = () => {
   return [{title: 'ARRVLS | Home'}];
@@ -71,11 +71,18 @@ export default function Homepage() {
     (product: any) => product.images.nodes,
   );
 
-  console.log(showreelImages);
-
   return (
     <div className="home">
       <Showreel showreelImages={showreelImages || []} />
+      {/* MARQUEE */}
+      <div className="relative w-full overflow-clip z-10 bg-secondary">
+        <ScrollMarquee>
+          <h1 className="text-headline-large text-nowrap text-primary px-8">
+            A modern React & JavaScript component library powered by GSAP &
+            Tailwind
+          </h1>
+        </ScrollMarquee>
+      </div>
       <FeaturedCollection collection={data.featuredCollection} />
       <FeaturedProducts products={data.recommendedProducts} />
     </div>

@@ -2,8 +2,9 @@
 
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {Image} from '@shopify/hydrogen';
+import ScrollMarquee from './ScrollMarquee';
 
-const delay = 1000;
+const delay = 1500;
 
 type ShowreelProps = {
   showreelImages: {
@@ -15,17 +16,17 @@ type ShowreelProps = {
   }[];
 };
 
-// Layout for the grid (12 columns, 2 rows, max 10 images)
+// Layout for the grid (12 columns, 3 rows, max 10 images)
 const gridLayoutRef = [
-  {colStart: 1, colEnd: 5, rowStart: 1, rowEnd: 3},
-  {colStart: 6, colEnd: 9, rowStart: 1, rowEnd: 1},
-  {colStart: 5, colEnd: 7, rowStart: 2, rowEnd: 3},
-  {colStart: 9, colEnd: 13, rowStart: 1, rowEnd: 2},
-  {colStart: 2, colEnd: 4, rowStart: 2, rowEnd: 1},
-  {colStart: 1, colEnd: 4, rowStart: 1, rowEnd: 1},
-  {colStart: 5, colEnd: 8, rowStart: 1, rowEnd: 1},
-  {colStart: 5, colEnd: 9, rowStart: 2, rowEnd: 1},
+  {colStart: 1, colEnd: 5, rowStart: 2, rowEnd: 4},
+  {colStart: 6, colEnd: 9, rowStart: 1, rowEnd: 2},
+  {colStart: 8, colEnd: 11, rowStart: 2, rowEnd: 3},
+  {colStart: 1, colEnd: 9, rowStart: 1, rowEnd: 4},
+  {colStart: 9, colEnd: 13, rowStart: 2, rowEnd: 4},
   {colStart: 1, colEnd: 4, rowStart: 1, rowEnd: 2},
+  {colStart: 5, colEnd: 8, rowStart: 2, rowEnd: 4},
+  {colStart: 5, colEnd: 9, rowStart: 2, rowEnd: 3},
+  {colStart: 1, colEnd: 4, rowStart: 1, rowEnd: 3},
   {colStart: 9, colEnd: 12, rowStart: 1, rowEnd: 2},
 ];
 
@@ -57,16 +58,25 @@ export default function Showreel({showreelImages}: ShowreelProps) {
   }, [slideIndex, showreelImages]);
 
   return (
-    <section className="h-[700px] w-full mb-32">
+    <section className="relative h-[var(--showreel-height)] w-full mb-32">
+      {/* TEXT */}
+      <div className="absolute inset-0 grid grid-cols-12 grid-rows-3 gap-4 overflow-clip z-10 mix-blend-difference">
+        <div className="col-start-3 col-end-8 row-start-2 [&>*]:text-headline-medium">
+          <p className="mt-4 text-pretty">
+            Craft smooth, responsive, and production-ready UI without
+            reinventing the wheel
+          </p>
+        </div>
+      </div>
+      {/* IMAGES */}
       <div
         ref={showreelRef}
-        className="relative w-full h-full grid grid-cols-12 grid-rows-2 gap-4 overflow-clip"
+        className="relative w-full h-full grid grid-cols-12 grid-rows-3 gap-4 overflow-clip"
       >
         {showreelImages.map((image, index) => {
           return (
             <div
               style={{
-                //  backgroundColor: '#f0f0f0',
                 gridColumnStart: gridLayoutRef[index].colStart,
                 gridColumnEnd: gridLayoutRef[index].colEnd,
                 gridRowStart: gridLayoutRef[index].rowStart,
