@@ -58,8 +58,10 @@
   --text-label-medium: 12px;
   --text-label-small: 10px;
 
+  /* Widths based on Tailwind's spacing scale: --spacing: 0.25rem /* 4px */
   --width-aside: 500px;
   --max-width-container: 1530px;
+  --max-width-blog-title: 800px;
   --grid-item-width: 355px;
 
   /* Heights based on Tailwind's spacing scale: --spacing: 0.25rem /* 4px */
@@ -73,6 +75,7 @@
     100vh - var(--height-header) - var(--height-footer) - 2 * var(--spacing) * 8
   );
   --showreel-height: calc(100vh - var(--height-header) - var(--spacing) * 8);
+  --height-blog-image: 600px;
 
   /* Minimap dimensions */
   --minimap-width: 180px;
@@ -169,7 +172,7 @@
   }
 
   .heading-title {
-    @apply text-title-small md:text-title-medium lg:text-title-large font-medium;
+    @apply text-title-small md:text-title-medium lg:text-title-large font-normal;
   }
 
   /* INPUT STYLES */

@@ -83,27 +83,30 @@ export default function Article() {
   }).format(new Date(article.publishedAt));
 
   return (
-    <div className="article">
-      <div>
-        <time dateTime={article.publishedAt}>{publishedDate}</time>
-        {/* <address>{author?.name}</address> */}
-      </div>
-      <h1 className="heading-headline mb-4">{title}</h1>
+    <div>
+      <time dateTime={article.publishedAt}>{publishedDate}</time>
+      {/* <address>{author?.name}</address> */}
 
-      {image && (
-        <div className="w-full h-[500px] mb-8 overflow-clip">
-          <Image
-            className="h-full w-full object-cover"
-            data={image}
-            sizes="90vw"
-            loading="eager"
-          />
-        </div>
-      )}
-      <div
-        dangerouslySetInnerHTML={{__html: contentHtml}}
-        className="article"
-      />
+      <h1 className="heading-headline mt-4 max-w-blog-title text-pretty">
+        {title}
+      </h1>
+
+      <div className="lg:flex lg:gap-12 items-start">
+        {image && (
+          <div className="w-full mt-12 overflow-clip aspect-square flex-1">
+            <Image
+              className="h-full w-full object-cover"
+              data={image}
+              sizes="90vw"
+              loading="eager"
+            />
+          </div>
+        )}
+        <div
+          dangerouslySetInnerHTML={{__html: contentHtml}}
+          className="max-w-prose ml-auto text-pretty mt-12 [&>h2]:font-medium [&>h2]:text-title-small [&>h2]:md:text-title-medium [&>h2]:lg:text-title-large [&>h2]:mt-8 [&>p]:mb-6 [&>p]:mt-2 [&>ul>li]:mb-4 [&>ul>li]:list-disc [&>ul>li]:ml-4 mb-16 flex-1"
+        />
+      </div>
     </div>
   );
 }

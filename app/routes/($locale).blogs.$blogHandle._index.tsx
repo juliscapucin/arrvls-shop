@@ -8,6 +8,8 @@ import {Image, getPaginationVariables} from '@shopify/hydrogen';
 import type {ArticleItemFragment} from 'storefrontapi.generated';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import {useState} from 'react';
+import {CursorFollower} from '~/components/addons';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.blog.title ?? ''} blog`}];
@@ -77,7 +79,7 @@ export default function Blog() {
       <h1 className="heading-display">{blog.title}</h1>
 
       {/* BLOG GRID */}
-      <div className="grid gap-6 mb-8 [grid-template-columns:repeat(auto-fit,minmax(var(--grid-item-width),1fr))]">
+      <div className="grid gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-3">
         <PaginatedResourceSection connection={articles}>
           {({node: article, index}) => (
             <ArticleItem
@@ -99,27 +101,34 @@ function ArticleItem({
   article: ArticleItemFragment;
   loading?: HTMLImageElement['loading'];
 }) {
+  const [isVisible, setIsVisible] = useState(false);
   const publishedAt = new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   }).format(new Date(article.publishedAt!));
+
   return (
-    <div className="blog-article" key={article.id}>
-      <Link to={`/blogs/${article.blog.handle}/${article.handle}`}>
+    <div className="relative" key={article.id}>
+      <CursorFollower isVisible={isVisible} variant="small" />
+      <Link
+        onMouseEnter={() => setIsVisible(true)}
+        onMouseLeave={() => setIsVisible(false)}
+        to={`/blogs/${article.blog.handle}/${article.handle}`}
+      >
         {article.image && (
-          <div className="block aspect-3/2 relative">
+          <div className="relative overflow-clip aspect-square">
             <Image
               alt={article.image.altText || article.title}
-              className="h-full"
+              className="h-full w-full object-cover"
               data={article.image}
               loading={loading}
               sizes="(min-width: 768px) 50vw, 100vw"
             />
           </div>
         )}
-        <h3>{article.title}</h3>
-        <small>{publishedAt}</small>
+        <h3 className="heading-title mt-4">{article.title}</h3>
+        {/* <small>{publishedAt}</small> */}
       </Link>
     </div>
   );
