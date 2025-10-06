@@ -13,32 +13,43 @@ type ScrollMarqueeProps = {
 export default function ScrollMarquee({children}: ScrollMarqueeProps) {
   const marqueeRef = useRef<HTMLHeadingElement>(null);
   useGSAP(() => {
-    if (marqueeRef.current) {
-      const element = marqueeRef.current;
-      const parentElement = element.parentElement;
-      if (!parentElement) return;
+    if (!marqueeRef.current) return;
 
-      GSAP.fromTo(
-        element,
-        {x: 0},
-        {
-          x: () => -(element.offsetWidth - parentElement.offsetWidth),
-          ease: 'none',
-          scrollTrigger: {
-            trigger: element,
-            start: 'bottom bottom',
-            end: 'top top+=200',
-            scrub: true,
-          },
-          duration: 20,
+    const element = marqueeRef.current;
+    const parentElement = element?.parentElement;
+    if (!element || !parentElement) return;
+
+    const tween = GSAP.fromTo(
+      element,
+      {x: 0},
+      {
+        x: () => -(element.offsetWidth - parentElement.offsetWidth),
+        ease: 'none',
+        scrollTrigger: {
+          trigger: element,
+          start: 'top bottom-=200',
+          end: 'bottom top+=200',
+          scrub: true,
+          invalidateOnRefresh: true, // Recalculate on ScrollTrigger refresh
+          // markers: true,
         },
-      );
-    }
+      },
+    );
+
+    const handleResize = () => ScrollTrigger.refresh();
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      tween.kill();
+    };
   }, []);
 
   return (
-    <div ref={marqueeRef} className="w-fit">
-      {children}
+    <div className="relative w-screen max-w-container overflow-clip z-10 bg-secondary -mx-4 md:-mx-8 2xl:mx-0">
+      <div ref={marqueeRef} className="w-fit">
+        {children}
+      </div>
     </div>
   );
 }

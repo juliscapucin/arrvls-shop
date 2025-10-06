@@ -2,7 +2,6 @@
 
 import {useEffect, useMemo, useRef, useState} from 'react';
 import {Image} from '@shopify/hydrogen';
-import ScrollMarquee from './ScrollMarquee';
 
 const delay = 1500;
 
@@ -58,7 +57,7 @@ export default function Showreel({showreelImages}: ShowreelProps) {
   }, [slideIndex, showreelImages]);
 
   return (
-    <section className="relative h-[var(--showreel-height)] w-full mb-32">
+    <section className="relative h-[var(--showreel-height)] overflow-clip -mx-8 2xl:mx-0 -mt-8">
       {/* TEXT */}
       <div className="absolute inset-0 grid grid-cols-12 grid-rows-3 gap-4 overflow-clip z-10 mix-blend-difference">
         <div className="col-start-3 col-end-8 row-start-2 [&>*]:text-headline-medium">
@@ -82,7 +81,7 @@ export default function Showreel({showreelImages}: ShowreelProps) {
                 gridRowStart: gridLayoutRef[index].rowStart,
                 gridRowEnd: gridLayoutRef[index].rowEnd,
               }}
-              key={image.url}
+              key={`${image.id}-${index}`}
             >
               <Image
                 className={`object-cover md:object-contain transition-opacity duration-300 ${

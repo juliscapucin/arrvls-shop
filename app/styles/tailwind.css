@@ -56,9 +56,8 @@
   --text-label-medium: 12px;
   --text-label-small: 10px;
 
-  /* Widths based on Tailwind's spacing scale: --spacing: 0.25rem /* 4px */
   --width-aside: 500px;
-  --max-width-container: 1800px;
+  --max-width-container: 1530px;
   --grid-item-width: 355px;
 
   /* Heights based on Tailwind's spacing scale: --spacing: 0.25rem /* 4px */

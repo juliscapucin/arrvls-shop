@@ -11,6 +11,8 @@ import type {
   FeaturedCollectionFragment,
   RecommendedProductsQuery,
   ProductFragment,
+  CollectionQuery,
+  FeaturedCollectionQuery,
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
 import {Showreel, ScrollMarquee} from '~/components/addons';
@@ -51,7 +53,7 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
  * Make sure to not throw any errors here, as it will cause the page to 500.
  */
 function loadDeferredData({context}: LoaderFunctionArgs) {
-  const recommendedProducts = context.storefront
+  const featuredProducts = context.storefront
     .query(FEATURED_PRODUCTS_QUERY)
     .catch((error) => {
       // Log query errors, but don't throw them so the page can still render
@@ -60,7 +62,7 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
     });
 
   return {
-    recommendedProducts,
+    featuredProducts,
   };
 }
 
@@ -74,17 +76,17 @@ export default function Homepage() {
   return (
     <div className="home">
       <Showreel showreelImages={showreelImages || []} />
+
       {/* MARQUEE */}
-      <div className="relative w-full overflow-clip z-10 bg-secondary">
-        <ScrollMarquee>
-          <h1 className="text-headline-large text-nowrap text-primary px-8">
-            A modern React & JavaScript component library powered by GSAP &
-            Tailwind
-          </h1>
-        </ScrollMarquee>
-      </div>
+      <ScrollMarquee>
+        <h1 className="text-headline-large text-nowrap text-primary px-8">
+          A modern React & JavaScript component library powered by GSAP &
+          Tailwind
+        </h1>
+      </ScrollMarquee>
+
       <FeaturedCollection collection={data.featuredCollection} />
-      <FeaturedProducts products={data.recommendedProducts} />
+      <FeaturedProducts products={data.featuredProducts} />
     </div>
   );
 }
@@ -98,7 +100,7 @@ function FeaturedCollection({
   const image = collection?.image;
   return (
     <Link
-      className="block relative h-[700px] md:h-[800px] overflow-clip"
+      className="block relative h-[var(--showreel-height)] overflow-clip"
       to={`/collections/${collection.handle}`}
     >
       {image && (
@@ -120,7 +122,7 @@ function FeaturedCollection({
 function FeaturedProducts({
   products,
 }: {
-  products: Promise<RecommendedProductsQuery | null>;
+  products: Promise<CollectionQuery | null>;
 }) {
   return (
     <div className="mt-24">
@@ -132,7 +134,7 @@ function FeaturedProducts({
           {(response) => (
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {response
-                ? response.products.nodes.map((product) => (
+                ? response.collection?.products.nodes.map((product) => (
                     <ProductItem key={product.id} product={product} />
                   ))
                 : null}
@@ -184,7 +186,7 @@ const HOME_SHOWREEL_QUERY = `#graphql
     collection(handle: "home-showreel") {
       id
       title
-      products(first: 20) {
+      products(first: 10) {
         nodes {
           ...ShowreelProduct
         }
@@ -194,7 +196,7 @@ const HOME_SHOWREEL_QUERY = `#graphql
 ` as const;
 
 const FEATURED_PRODUCTS_QUERY = `#graphql
-  fragment RecommendedProduct on Product {
+  fragment FeaturedProduct on Product {
     id
     title
     handle
@@ -212,11 +214,16 @@ const FEATURED_PRODUCTS_QUERY = `#graphql
       height
     }
   }
-  query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
+
+  query HomeShowreel($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
-    products(first: 6, sortKey: UPDATED_AT, reverse: true) {
-      nodes {
-        ...RecommendedProduct
+    collection(handle: "featured") {
+      id
+      title
+      products(first: 6) {
+        nodes {
+          ...FeaturedProduct
+        }
       }
     }
   }
