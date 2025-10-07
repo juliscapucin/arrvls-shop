@@ -23,7 +23,7 @@ const gridLayoutRef = [
   {colStart: 5, colEnd: 13, rowStart: 2, rowEnd: 6},
   {colStart: 9, colEnd: 13, rowStart: 2, rowEnd: 5},
   {colStart: 1, colEnd: 4, rowStart: 1, rowEnd: 3},
-  {colStart: 6, colEnd: 13, rowStart: 1, rowEnd: 6},
+  {colStart: 7, colEnd: 13, rowStart: 2, rowEnd: 6},
 ];
 
 export default function Showreel({showreelImages}: ShowreelProps) {

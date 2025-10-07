@@ -1,4 +1,4 @@
-import {Suspense} from 'react';
+import {Suspense, useRef} from 'react';
 import {Await, NavLink, useAsyncValue} from 'react-router';
 import {
   type CartViewPayload,
@@ -6,6 +6,12 @@ import {
   useOptimisticCart,
 } from '@shopify/hydrogen';
 import type {HeaderQuery, CartApiQueryFragment} from 'storefrontapi.generated';
+
+import GSAP from 'gsap';
+import {useGSAP} from '@gsap/react';
+import {Observer} from 'gsap/Observer';
+GSAP.registerPlugin(Observer);
+
 import {useAside} from '~/components/Aside';
 
 interface HeaderProps {
@@ -24,40 +30,82 @@ export function Header({
   publicStoreDomain,
 }: HeaderProps) {
   const {shop, menu} = header;
-  return (
-    <header className="text-secondary flex items-end justify-between gap-32 bg-primary px-4 lg:px-8 2xl:px-0 py-2 h-header max-w-container mx-auto border-b border-b-secondary/20">
-      {/* MOBILE CTAS */}
-      <div className="md:hidden absolute top-4 right-4">
-        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
-      </div>
+  const headerRef = useRef<HTMLElement | null>(null);
 
-      {/* LOGO */}
-      <NavLink
-        className={({isActive}) =>
-          (isActive ? 'text-secondary/80' : 'text-secondary') +
-          ' text-headline-large leading-none px-1 font-thin'
+  useGSAP(() => {
+    if (!headerRef.current) return;
+
+    const header = headerRef.current;
+
+    const observer = Observer.create({
+      type: 'wheel,touch,pointer',
+      wheelSpeed: -1,
+      onChangeY: (self) => {
+        if (self.deltaY < 0) {
+          // Hide when scrolling up
+          GSAP.to(header, {
+            yPercent: -100,
+            duration: 0.5,
+            ease: 'power3.out',
+            delay: 0.8,
+          });
+        } else if (self.deltaY > 0) {
+          // Show when scrolling down
+          GSAP.to(header, {
+            yPercent: 0,
+            duration: 0.5,
+            ease: 'power3.out',
+            delay: 0.2,
+          });
         }
-        prefetch="intent"
-        to="/"
-        // style={activeLinkStyle}
-        end
-      >
-        ARRVLS
-      </NavLink>
+      },
+      tolerance: 10,
+      debounce: true,
+    });
+    return () => {
+      observer.kill();
+    };
+  }, []);
 
-      {/* NAV MENU */}
-      <HeaderMenu
-        menu={menu}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-        publicStoreDomain={publicStoreDomain}
-      />
+  return (
+    <header
+      ref={headerRef}
+      className="fixed top-0 left-0 right-0 z-40 bg-primary/95 backdrop-blur-sm"
+    >
+      <div className="text-secondary flex items-end justify-between gap-32 bg-primary px-4 lg:px-8 2xl:px-0 py-2 h-header max-w-container mx-auto border-b border-b-secondary/20">
+        {/* MOBILE CTAS */}
+        <div className="md:hidden absolute top-4 right-4">
+          <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+        </div>
 
-      {/* DESKTOP CTAS */}
-      <div className="hidden md:block">
-        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+        {/* LOGO */}
+        <NavLink
+          className={({isActive}) =>
+            (isActive ? 'text-secondary/80' : 'text-secondary') +
+            ' text-headline-large leading-none px-1 font-thin'
+          }
+          prefetch="intent"
+          to="/"
+          // style={activeLinkStyle}
+          end
+        >
+          ARRVLS
+        </NavLink>
+
+        {/* NAV MENU */}
+        <HeaderMenu
+          menu={menu}
+          viewport="desktop"
+          primaryDomainUrl={header.shop.primaryDomain.url}
+          publicStoreDomain={publicStoreDomain}
+        />
+
+        {/* DESKTOP CTAS */}
+        <div className="hidden md:block">
+          <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+        </div>
+        <HeaderMenuMobileToggle />
       </div>
-      <HeaderMenuMobileToggle />
     </header>
   );
 }

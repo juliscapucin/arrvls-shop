@@ -47,25 +47,21 @@ export function PageLayout({
   }, []);
 
   return (
-    <div id="smooth-wrapper">
-      <div id="smooth-content">
-        <Aside.Provider>
-          <CartAside cart={cart} />
-          <SearchAside />
-          <MobileMenuAside
-            header={header}
-            publicStoreDomain={publicStoreDomain}
-          />
-          {header && (
-            <Header
-              header={header}
-              cart={cart}
-              isLoggedIn={isLoggedIn}
-              publicStoreDomain={publicStoreDomain}
-            />
-          )}
-
-          <main className="max-w-container mx-auto px-4 md:px-8 2xl:px-0 min-h-full overflow-x-clip">
+    <Aside.Provider>
+      <CartAside cart={cart} />
+      <SearchAside />
+      <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
+      {header && (
+        <Header
+          header={header}
+          cart={cart}
+          isLoggedIn={isLoggedIn}
+          publicStoreDomain={publicStoreDomain}
+        />
+      )}
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          <main className="max-w-container mx-auto px-4 md:px-8 2xl:px-0 min-h-full overflow-x-clip pt-[var(--height-header)]">
             {children}
           </main>
 
@@ -74,9 +70,9 @@ export function PageLayout({
             header={header}
             publicStoreDomain={publicStoreDomain}
           />
-        </Aside.Provider>{' '}
+        </div>
       </div>
-    </div>
+    </Aside.Provider>
   );
 }
 
