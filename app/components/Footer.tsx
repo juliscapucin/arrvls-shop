@@ -60,6 +60,8 @@ function FooterMenu({
     )
       return;
 
+    console.log(location.pathname);
+
     GSAP.registerPlugin(ScrollTrigger);
 
     ScrollTrigger.getById('footer')?.refresh();
@@ -103,6 +105,8 @@ function FooterMenu({
         ref={footerMaskRef}
         className="absolute inset-0 z-20 bg-primary"
       ></div>
+      {/* GRID */}
+      <div className="absolute inset-0 -z-20 grid-texture"></div>
       <footer
         ref={footerContainerRef}
         className="relative text-secondary h-footer max-w-container mx-auto py-8 flex flex-wrap items-end justify-between px-4 md:px-8 2xl:px-0"

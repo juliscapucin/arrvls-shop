@@ -20,20 +20,20 @@ const gridLayoutDesktop = [
   {colStart: 1, colEnd: 5, rowStart: 3, rowEnd: 6},
   {colStart: 6, colEnd: 11, rowStart: 1, rowEnd: 4},
   {colStart: 10, colEnd: 13, rowStart: 2, rowEnd: 4},
-  {colStart: 5, colEnd: 13, rowStart: 2, rowEnd: 6},
+  {colStart: 8, colEnd: 13, rowStart: 1, rowEnd: 5},
   {colStart: 9, colEnd: 13, rowStart: 2, rowEnd: 5},
   {colStart: 1, colEnd: 4, rowStart: 1, rowEnd: 3},
   {colStart: 7, colEnd: 13, rowStart: 2, rowEnd: 6},
 ];
 
 const gridLayoutMobile = [
-  {colStart: 1, colEnd: 7, rowStart: 1, rowEnd: 2},
-  {colStart: 7, colEnd: 13, rowStart: 2, rowEnd: 4},
-  {colStart: 1, colEnd: 7, rowStart: 3, rowEnd: 4},
-  {colStart: 1, colEnd: 7, rowStart: 1, rowEnd: 3},
-  {colStart: 5, colEnd: 10, rowStart: 2, rowEnd: 4},
-  {colStart: 1, colEnd: 7, rowStart: 4, rowEnd: 6},
-  {colStart: 3, colEnd: 13, rowStart: 3, rowEnd: 5},
+  {colStart: 2, colEnd: 9, rowStart: 1, rowEnd: 3},
+  {colStart: 6, colEnd: 13, rowStart: 2, rowEnd: 4},
+  {colStart: 3, colEnd: 10, rowStart: 3, rowEnd: 5},
+  {colStart: 4, colEnd: 11, rowStart: 1, rowEnd: 3},
+  {colStart: 5, colEnd: 12, rowStart: 3, rowEnd: 5},
+  {colStart: 1, colEnd: 8, rowStart: 4, rowEnd: 6},
+  {colStart: 4, colEnd: 11, rowStart: 2, rowEnd: 4},
 ];
 
 export default function Showreel({showreelImages}: ShowreelProps) {
@@ -45,7 +45,7 @@ export default function Showreel({showreelImages}: ShowreelProps) {
   // CHECK IF MOBILE
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 800);
     };
 
     handleResize();
@@ -93,7 +93,7 @@ export default function Showreel({showreelImages}: ShowreelProps) {
       {/* IMAGES */}
       <div
         ref={showreelRef}
-        className="relative w-full h-full grid grid-cols-12 grid-rows-5 overflow-clip border-b border-b-secondary/10 border-r border-r-secondary/10"
+        className="relative w-full h-full grid grid-cols-12 grid-rows-5 overflow-clip border-b border-b-secondary/10 border-r border-r-secondary/10 md:hidden lg:grid"
       >
         {showreelImages.map((image, index) => {
           return (
