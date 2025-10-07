@@ -8,6 +8,8 @@ import {getPaginationVariables, Analytics} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {ProductItem} from '~/components/ProductItem';
+import {CursorFollower} from '~/components/addons';
+import {useState} from 'react';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
@@ -72,19 +74,32 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
   return {};
 }
 
+const gridLayout = [
+  'col-start-1 col-end-7',
+  'col-start-5 col-end-9',
+  'col-start-1 col-end-7',
+  'col-start-9 col-end-13',
+  'col-start-7 col-end-13',
+];
+
 export default function Collection() {
   const {collection} = useLoaderData<typeof loader>();
+  const [isCursorFollowerVisible, setIsCursorFollowerVisible] = useState(true);
 
   return (
     <div>
       <h1 className="heading-display mt-8">{collection.title}</h1>
       <p className="max-w-prose mb-4">{collection.description}</p>
+      <CursorFollower isVisible={isCursorFollowerVisible} variant="small" />
       <PaginatedResourceSection
         connection={collection.products}
-        resourcesClassName="grid gap-6 [grid-template-columns:repeat(auto-fit,minmax(var(--grid-item-width),1fr))] mb-8"
+        resourcesClassName="grid gap-x-6 gap-y-40 grid-cols-12 mb-8"
       >
         {({node: product, index}) => (
           <ProductItem
+            className={gridLayout[index % gridLayout.length]}
+            onMouseEnter={() => setIsCursorFollowerVisible(true)}
+            onMouseLeave={() => setIsCursorFollowerVisible(false)}
             key={product.id}
             product={product}
             loading={index < 8 ? 'eager' : undefined}

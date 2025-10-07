@@ -11,7 +11,7 @@ import {IconChevron} from '~/components/icons';
 
 type CursorFollowerProps = {
   variant: 'big' | 'small';
-  isVisible?: boolean;
+  isVisible: boolean;
   children?: React.ReactNode;
 };
 

@@ -27,9 +27,9 @@ export default function ScrollMarquee({children}: ScrollMarqueeProps) {
         ease: 'none',
         scrollTrigger: {
           trigger: element,
-          start: 'top bottom-=200',
-          end: 'bottom top+=200',
-          scrub: true,
+          start: 'top bottom-=300',
+          end: 'bottom top+=300',
+          scrub: 2,
           invalidateOnRefresh: true, // Recalculate on ScrollTrigger refresh
           // markers: true,
         },
@@ -46,7 +46,7 @@ export default function ScrollMarquee({children}: ScrollMarqueeProps) {
   }, []);
 
   return (
-    <div className="relative w-screen max-w-container overflow-clip z-10 bg-secondary -mx-4 md:-mx-8 2xl:mx-0">
+    <div className="relative w-screen max-w-container overflow-clip z-10 -mx-4 md:-mx-8 2xl:mx-0">
       <div ref={marqueeRef} className="w-fit">
         {children}
       </div>

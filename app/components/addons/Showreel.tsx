@@ -19,8 +19,8 @@ type ShowreelProps = {
 const gridLayoutRef = [
   {colStart: 1, colEnd: 5, rowStart: 2, rowEnd: 4},
   {colStart: 6, colEnd: 9, rowStart: 1, rowEnd: 2},
-  {colStart: 8, colEnd: 11, rowStart: 2, rowEnd: 3},
-  {colStart: 1, colEnd: 9, rowStart: 1, rowEnd: 4},
+  {colStart: 10, colEnd: 13, rowStart: 2, rowEnd: 3},
+  {colStart: 5, colEnd: 13, rowStart: 1, rowEnd: 4},
   {colStart: 9, colEnd: 13, rowStart: 2, rowEnd: 4},
   {colStart: 1, colEnd: 4, rowStart: 1, rowEnd: 2},
   {colStart: 5, colEnd: 8, rowStart: 2, rowEnd: 4},
@@ -57,24 +57,29 @@ export default function Showreel({showreelImages}: ShowreelProps) {
   }, [slideIndex, showreelImages]);
 
   return (
-    <section className="relative h-[var(--showreel-height)] overflow-clip -mx-8 2xl:mx-0 -mt-8">
+    <section className="relative h-[var(--showreel-height)] mt-[var(--header-height)] overflow-clip -mx-8 2xl:mx-0">
       {/* TEXT */}
-      <div className="absolute inset-0 grid grid-cols-12 grid-rows-3 gap-4 overflow-clip z-10 mix-blend-difference">
-        <div className="col-start-3 col-end-8 row-start-2 [&>*]:text-headline-medium">
-          <p className="mt-4 text-pretty">
-            Craft smooth, responsive, and production-ready UI without
-            reinventing the wheel
+      <div className="absolute inset-8 lg:inset-0 lg:grid lg:grid-cols-12 lg:grid-rows-4 gap-4 overflow-clip z-10 mix-blend-difference">
+        <div className="col-start-2 col-end-6 row-start-2">
+          <p className="heading-headline text-pretty">
+            Craft smooth, responsive, and production-ready UI
+          </p>
+        </div>
+        <div className="col-start-2 col-end-6 row-start-3">
+          <p className="heading-headline mt-24 text-pretty">
+            Without reinventing the wheel
           </p>
         </div>
       </div>
       {/* IMAGES */}
       <div
         ref={showreelRef}
-        className="relative w-full h-full grid grid-cols-12 grid-rows-3 gap-4 overflow-clip"
+        className="relative w-full h-full lg:grid lg:grid-cols-12 lg:grid-rows-4 gap-4 overflow-clip"
       >
         {showreelImages.map((image, index) => {
           return (
             <div
+              className="absolute inset-0 lg:relative w-full h-full transition-opacity duration-300"
               style={{
                 gridColumnStart: gridLayoutRef[index].colStart,
                 gridColumnEnd: gridLayoutRef[index].colEnd,

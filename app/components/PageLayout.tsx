@@ -15,6 +15,12 @@ import {
 } from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
 
+import GSAP from 'gsap';
+import {useGSAP} from '@gsap/react';
+import {ScrollSmoother} from 'gsap/ScrollSmoother';
+import {ScrollTrigger} from 'gsap/ScrollTrigger';
+GSAP.registerPlugin(ScrollSmoother, ScrollTrigger);
+
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
   footer: Promise<FooterQuery | null>;
@@ -32,28 +38,45 @@ export function PageLayout({
   isLoggedIn,
   publicStoreDomain,
 }: PageLayoutProps) {
+  useGSAP(() => {
+    // create the scrollSmoother before your scrollTriggers
+    ScrollSmoother.create({
+      smooth: 1, // how long (in seconds) it takes to "catch up" to the native scroll position
+      effects: false, // looks for data-speed and data-lag attributes on elements
+    });
+  }, []);
+
   return (
-    <Aside.Provider>
-      <CartAside cart={cart} />
-      <SearchAside />
-      <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
-      {header && (
-        <Header
-          header={header}
-          cart={cart}
-          isLoggedIn={isLoggedIn}
-          publicStoreDomain={publicStoreDomain}
-        />
-      )}
-      <main className="max-w-container mx-auto p-4 md:p-8 2xl:px-0 min-h-full overflow-x-clip">
-        {children}
-      </main>
-      <Footer
-        footer={footer}
-        header={header}
-        publicStoreDomain={publicStoreDomain}
-      />
-    </Aside.Provider>
+    <div id="smooth-wrapper">
+      <div id="smooth-content">
+        <Aside.Provider>
+          <CartAside cart={cart} />
+          <SearchAside />
+          <MobileMenuAside
+            header={header}
+            publicStoreDomain={publicStoreDomain}
+          />
+          {header && (
+            <Header
+              header={header}
+              cart={cart}
+              isLoggedIn={isLoggedIn}
+              publicStoreDomain={publicStoreDomain}
+            />
+          )}
+
+          <main className="max-w-container mx-auto p-4 md:p-8 2xl:px-0 min-h-full overflow-x-clip">
+            {children}
+          </main>
+
+          <Footer
+            footer={footer}
+            header={header}
+            publicStoreDomain={publicStoreDomain}
+          />
+        </Aside.Provider>{' '}
+      </div>
+    </div>
   );
 }
 

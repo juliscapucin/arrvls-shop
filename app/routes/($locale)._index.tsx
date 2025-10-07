@@ -17,6 +17,14 @@ import type {
 import {ProductItem} from '~/components/ProductItem';
 import {Showreel, ScrollMarquee} from '~/components/addons';
 
+const gridLayout = [
+  'col-start-1 col-end-7',
+  'col-start-5 col-end-9',
+  'col-start-1 col-end-7',
+  'col-start-9 col-end-13',
+  'col-start-7 col-end-13',
+];
+
 export const meta: MetaFunction = () => {
   return [{title: 'ARRVLS | Home'}];
 };
@@ -79,7 +87,7 @@ export default function Homepage() {
 
       {/* MARQUEE */}
       <ScrollMarquee>
-        <h1 className="text-headline-large text-nowrap text-primary px-8">
+        <h1 className="heading-headline text-nowrap text-secondary border-y px-8 py-16 uppercase">
           A modern React & JavaScript component library powered by GSAP &
           Tailwind
         </h1>
@@ -126,16 +134,18 @@ function FeaturedProducts({
 }) {
   return (
     <div className="mt-24">
-      <h2 className="text-title-small md:text-title-medium lg:text-title-large mb-4">
-        Featured
-      </h2>
+      <h2 className="heading-display mb-4">Featured</h2>
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-x-6 gap-y-40 md:grid-cols-2 lg:grid-cols-3">
               {response
-                ? response.collection?.products.nodes.map((product) => (
-                    <ProductItem key={product.id} product={product} />
+                ? response.collection?.products.nodes.map((product, index) => (
+                    <ProductItem
+                      key={product.id}
+                      product={product}
+                      className={gridLayout[index % gridLayout.length]}
+                    />
                   ))
                 : null}
             </div>

@@ -7,25 +7,19 @@ import type {
 } from 'storefrontapi.generated';
 import {useVariantUrl} from '~/lib/variants';
 
-export function ProductItem({
-  product,
-  loading,
-}: {
+type ProductItemProps = React.AnchorHTMLAttributes<HTMLAnchorElement> & {
   product:
     | CollectionItemFragment
     | ProductItemFragment
     | RecommendedProductFragment;
   loading?: 'eager' | 'lazy';
-}) {
+};
+
+export function ProductItem({product, loading, ...props}: ProductItemProps) {
   const variantUrl = useVariantUrl(product.handle);
   const image = product.featuredImage;
   return (
-    <Link
-      className="h-auto w-full mb-8"
-      key={product.id}
-      prefetch="intent"
-      to={variantUrl}
-    >
+    <Link key={product.id} prefetch="intent" to={variantUrl} {...props}>
       {image && (
         <Image
           alt={image.altText || product.title}
