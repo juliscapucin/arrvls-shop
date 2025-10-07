@@ -80,12 +80,12 @@ function FooterMenu({
       footerMaskRef.current,
       {yPercent: 0},
       {
-        yPercent: -90,
+        yPercent: -100,
         ease: 'none',
       },
     ).fromTo(
       footerContentRef.current,
-      {yPercent: -50},
+      {yPercent: -60},
       {yPercent: 0, ease: 'none'},
       0, // start at the same time as previous tween
     );
@@ -96,19 +96,21 @@ function FooterMenu({
   }, [location.pathname]);
 
   return (
-    <footer
-      ref={footerContainerRef}
-      className="relative text-secondary bg-primary border-t border-t-secondary/20 h-footer max-w-container mx-auto"
-    >
-      <div className="absolute top-4 bottom-0 w-full z-50 overflow-clip">
-        <div
-          ref={footerMaskRef}
-          className="absolute inset-0 top-2 bg-primary z-20"
-        ></div>
-
+    <div className="relative overflow-clip">
+      <div className="absolute inset-0 bg-secondary/5"></div>
+      {/* MASK */}
+      <div
+        ref={footerMaskRef}
+        className="absolute inset-0 z-20 bg-primary"
+      ></div>
+      <footer
+        ref={footerContainerRef}
+        className="relative text-secondary h-footer max-w-container mx-auto py-8 flex flex-wrap items-end justify-between px-4 md:px-8 2xl:px-0"
+      >
+        {/* NAVIGATION */}
         <nav
           ref={footerContentRef}
-          className="flex flex-wrap justify-between items-end gap-4 w-full h-full pb-16 px-4 md:px-8 2xl:px-0"
+          className="flex flex-wrap items-end gap-4 sm:gap-8 md:gap-16 mb-8 md:mb-0"
           role="navigation"
         >
           {/* LOGO */}
@@ -163,8 +165,26 @@ function FooterMenu({
             })}
           </div>
         </nav>
-      </div>
-    </footer>
+
+        {/* BOTTOM BAR */}
+        <div className="relative z-50 text-secondary/60 flex flex-wrap justify-end gap-2 lg:gap-16">
+          <span className="text-secondary/60">
+            © {new Date().getFullYear()} {shop.name}
+          </span>
+          <span className="ml-auto">
+            Website by{' '}
+            <a
+              href="https://www.juliscapucin.com"
+              className="underlined-link text-secondary/60"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Juli Scapucin
+            </a>
+          </span>
+        </div>
+      </footer>
+    </div>
   );
 }
 

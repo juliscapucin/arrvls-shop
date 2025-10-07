@@ -42,7 +42,7 @@ export function Header({
       wheelSpeed: -1,
       onUp: (self) => {
         // Hide when scrolling up
-        if (self.deltaY < -300)
+        if (self.deltaY < -200)
           GSAP.to(header, {
             yPercent: -100,
             duration: 0.5,
@@ -68,9 +68,9 @@ export function Header({
   return (
     <header
       ref={headerRef}
-      className="fixed top-0 left-0 right-0 z-40 bg-primary"
+      className="fixed top-0 left-0 right-0 z-40 bg-secondary/5 backdrop-blur-2xl"
     >
-      <div className="text-secondary flex items-end justify-between gap-32 bg-primary px-4 lg:px-8 2xl:px-0 py-2 h-header max-w-container mx-auto border-b border-b-secondary/20">
+      <div className="text-secondary flex items-end justify-between gap-32 px-4 lg:px-8 2xl:px-0 py-2 h-header max-w-container mx-auto">
         {/* MOBILE CTAS */}
         <div className="md:hidden absolute top-4 right-4">
           <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />

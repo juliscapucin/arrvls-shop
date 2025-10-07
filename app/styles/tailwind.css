@@ -5,7 +5,7 @@
 :root {
   interpolate-size: allow-keywords; /* To animate auto-height on accordion component */
 
-  --primary: oklch(22.931% 0.04172 147.508);
+  --primary: oklch(20.455% 0.0249 249.155);
   /* --primary-hex: #1a2a22; */
   --primary-light: oklch(27.848% 0.01243 107.228);
   --primary-accent: oklch(37.371% 0.09092 146.316);
@@ -178,5 +178,10 @@
   /* INPUT STYLES */
   .input-primary {
     @apply border border-secondary py-2 px-4 bg-transparent text-secondary placeholder:text-secondary/70 focus:outline-none focus:ring-1 focus:ring-secondary/30 focus:border-transparent transition-colors duration-300;
+  }
+
+  /* GRID TEXTURE */
+  .grid-texture {
+    @apply bg-[linear-gradient(to_right,color-mix(in_oklch,var(--color-secondary)_10%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_oklch,var(--color-secondary)_10%,transparent)_1px,transparent_1px)] bg-[size:calc(100%/24)_calc(100%/10)] md:bg-[size:calc(100%/48)_calc(100%/10)];
   }
 }

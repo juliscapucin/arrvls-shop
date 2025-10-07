@@ -130,7 +130,7 @@ export default function Showreel({showreelImages}: ShowreelProps) {
       </div>
 
       {/* OVERLAY */}
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,color-mix(in_oklch,var(--color-secondary)_10%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_oklch,var(--color-secondary)_10%,transparent)_1px,transparent_1px)] bg-[size:calc(100%/24)_calc(100%/10)] md:bg-[size:calc(100%/48)_calc(100%/10)]"></div>
+      <div className="absolute inset-0 -z-10 grid-texture"></div>
     </section>
   );
 }
