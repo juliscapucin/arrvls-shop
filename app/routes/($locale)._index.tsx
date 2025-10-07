@@ -9,10 +9,10 @@ import {Suspense} from 'react';
 import {Image, Money} from '@shopify/hydrogen';
 import type {
   FeaturedCollectionFragment,
-  RecommendedProductsQuery,
   ProductFragment,
   CollectionQuery,
   FeaturedCollectionQuery,
+  FeaturedProductsCollectionQuery,
 } from 'storefrontapi.generated';
 import {ProductItem} from '~/components/ProductItem';
 import {Showreel, ScrollMarquee} from '~/components/addons';
@@ -102,7 +102,7 @@ export default function Homepage() {
 function FeaturedCollection({
   collection,
 }: {
-  collection: FeaturedCollectionFragment;
+  collection: FeaturedCollectionFragment | null | undefined;
 }) {
   if (!collection) return null;
   const image = collection?.image;
@@ -130,7 +130,7 @@ function FeaturedCollection({
 function FeaturedProducts({
   products,
 }: {
-  products: Promise<CollectionQuery | null>;
+  products: Promise<FeaturedProductsCollectionQuery | null>;
 }) {
   return (
     <div className="mt-24">
@@ -225,7 +225,7 @@ const FEATURED_PRODUCTS_QUERY = `#graphql
     }
   }
 
-  query HomeShowreel($country: CountryCode, $language: LanguageCode)
+  query FeaturedProductsCollection($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
     collection(handle: "featured") {
       id

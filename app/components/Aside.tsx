@@ -76,7 +76,7 @@ export function Aside({
     >
       {/* ASIDE */}
       <aside
-        className={`fixed bg-primary w-screen md:w-aside fixed md:border-l border-l-secondary top-0 right-0 h-screen transition-transform duration-200 ease-in-out shadow-2xl p-4 ${type === activeType ? 'translate-x-0' : 'translate-x-full'}`}
+        className={`fixed bg-primary w-screen md:w-aside md:border-l border-l-secondary top-0 right-0 h-screen transition-transform duration-200 ease-in-out shadow-2xl p-4 ${type === activeType ? 'translate-x-0' : 'translate-x-full'}`}
       >
         {/* ASIDE HEADER */}
         <header className="flex items-center justify-between h-16 lg:border-b border-secondary">

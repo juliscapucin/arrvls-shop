@@ -66,7 +66,7 @@
 
   /* Heights based on Tailwind's spacing scale: --spacing: 0.25rem /* 4px */
   --height-header: calc(var(--spacing) * 32);
-  --height-footer: calc(var(--spacing) * 24);
+  --height-footer: calc(var(--spacing) * 96);
   --min-height-full: calc(100vh - var(--height-header) - var(--height-footer));
   --min-height-full-mobile: calc(
     100vh - var(--height-header) - var(--height-footer) - 2 * var(--spacing) * 4
@@ -164,15 +164,15 @@
   } */
 
   .heading-display {
-    @apply text-display-small md:text-display-medium lg:text-display-large leading-none font-thin;
+    @apply text-display-small lg:text-display-medium xl:text-display-large leading-none font-thin;
   }
 
   .heading-headline {
-    @apply text-headline-small md:text-headline-medium lg:text-headline-large leading-none font-thin;
+    @apply text-headline-small lg:text-headline-medium xl:text-headline-large leading-none font-thin;
   }
 
   .heading-title {
-    @apply text-title-small md:text-title-medium lg:text-title-large font-normal;
+    @apply text-title-small lg:text-title-medium xl:text-title-large font-normal;
   }
 
   /* INPUT STYLES */

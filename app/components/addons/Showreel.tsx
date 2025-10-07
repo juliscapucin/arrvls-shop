@@ -16,7 +16,7 @@ type ShowreelProps = {
 };
 
 // Layout for the grid (12 columns, 3 rows, max 10 images)
-const gridLayoutRef = [
+const gridLayoutDesktop = [
   {colStart: 1, colEnd: 5, rowStart: 3, rowEnd: 6},
   {colStart: 6, colEnd: 11, rowStart: 1, rowEnd: 4},
   {colStart: 10, colEnd: 13, rowStart: 2, rowEnd: 4},
@@ -26,10 +26,32 @@ const gridLayoutRef = [
   {colStart: 7, colEnd: 13, rowStart: 2, rowEnd: 6},
 ];
 
+const gridLayoutMobile = [
+  {colStart: 1, colEnd: 7, rowStart: 1, rowEnd: 2},
+  {colStart: 7, colEnd: 13, rowStart: 2, rowEnd: 4},
+  {colStart: 1, colEnd: 7, rowStart: 3, rowEnd: 4},
+  {colStart: 1, colEnd: 7, rowStart: 1, rowEnd: 3},
+  {colStart: 5, colEnd: 10, rowStart: 2, rowEnd: 4},
+  {colStart: 1, colEnd: 7, rowStart: 4, rowEnd: 6},
+  {colStart: 3, colEnd: 13, rowStart: 3, rowEnd: 5},
+];
+
 export default function Showreel({showreelImages}: ShowreelProps) {
   const [slideIndex, setSlideIndex] = useState(1);
+  const [isMobile, setIsMobile] = useState(false);
   const showreelRef = useRef<HTMLDivElement | null>(null);
   const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  // CHECK IF MOBILE
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // SLIDE ANIMATION
   const resetTimeout = () => {
@@ -56,13 +78,13 @@ export default function Showreel({showreelImages}: ShowreelProps) {
   return (
     <section className="relative h-[var(--showreel-height)] -mt-[1px] -mx-8 2xl:mx-0">
       {/* TEXT */}
-      <div className="absolute inset-8 lg:inset-0 lg:grid lg:grid-cols-12 lg:grid-rows-5 overflow-clip z-10 mix-blend-difference">
-        <div className="col-start-3 col-end-7 row-start-2 p-4">
+      <div className="absolute inset-8 md:inset-0 grid grid-cols-12 grid-rows-5 overflow-clip z-10 mix-blend-difference">
+        <div className="col-start-2 col-end-10 lg:col-start-3 lg:col-end-7 row-start-2 p-4">
           <p className="heading-headline text-pretty">
             Craft smooth, responsive, and production-ready UI
           </p>
         </div>
-        <div className="col-start-3 col-end-7 row-start-4 p-4">
+        <div className="col-start-2 col-end-10 lg:col-start-3 lg:col-end-7 row-start-4 p-4">
           <p className="heading-headline text-pretty">
             Without reinventing the wheel
           </p>
@@ -71,21 +93,29 @@ export default function Showreel({showreelImages}: ShowreelProps) {
       {/* IMAGES */}
       <div
         ref={showreelRef}
-        className="relative w-full h-full lg:grid lg:grid-cols-12 lg:grid-rows-5 overflow-clip border-b border-b-secondary/10 border-r border-r-secondary/10"
+        className="relative w-full h-full grid grid-cols-12 grid-rows-5 overflow-clip border-b border-b-secondary/10 border-r border-r-secondary/10"
       >
         {showreelImages.map((image, index) => {
           return (
             <div
-              className="absolute inset-0 lg:relative w-full h-full transition-opacity duration-300 overflow-clip"
+              className="w-full h-full transition-opacity duration-300 overflow-clip"
               style={{
-                gridColumnStart: gridLayoutRef[index].colStart,
-                gridColumnEnd: gridLayoutRef[index].colEnd,
-                gridRowStart: gridLayoutRef[index].rowStart,
-                gridRowEnd: gridLayoutRef[index].rowEnd,
+                gridColumnStart: isMobile
+                  ? gridLayoutMobile[index].colStart
+                  : gridLayoutDesktop[index].colStart,
+                gridColumnEnd: isMobile
+                  ? gridLayoutMobile[index].colEnd
+                  : gridLayoutDesktop[index].colEnd,
+                gridRowStart: isMobile
+                  ? gridLayoutMobile[index].rowStart
+                  : gridLayoutDesktop[index].rowStart,
+                gridRowEnd: isMobile
+                  ? gridLayoutMobile[index].rowEnd
+                  : gridLayoutDesktop[index].rowEnd,
               }}
               key={`${image.id}-${index}`}
             >
-              {/* <div className="absolute">{index + 1}</div> */}
+              {/* <div className="absolute z-50">{index + 1}</div> */}
               <Image
                 className={`w-full h-full object-cover transition-opacity duration-300 ${
                   slideIndex === index ? 'opacity-100' : 'opacity-0'
@@ -100,7 +130,7 @@ export default function Showreel({showreelImages}: ShowreelProps) {
       </div>
 
       {/* OVERLAY */}
-      <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,color-mix(in_oklch,var(--color-secondary)_10%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_oklch,var(--color-secondary)_10%,transparent)_1px,transparent_1px)] bg-[size:calc(100%/24)_calc(100%/10)]"></div>
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(to_right,color-mix(in_oklch,var(--color-secondary)_10%,transparent)_1px,transparent_1px),linear-gradient(to_bottom,color-mix(in_oklch,var(--color-secondary)_10%,transparent)_1px,transparent_1px)] bg-[size:calc(100%/24)_calc(100%/10)] md:bg-[size:calc(100%/48)_calc(100%/10)]"></div>
     </section>
   );
 }

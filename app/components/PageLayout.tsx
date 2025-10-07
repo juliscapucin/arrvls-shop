@@ -61,7 +61,7 @@ export function PageLayout({
       )}
       <div id="smooth-wrapper">
         <div id="smooth-content">
-          <main className="max-w-container mx-auto px-4 md:px-8 2xl:px-0 min-h-full overflow-x-clip pt-[var(--height-header)]">
+          <main className="max-w-container mx-auto px-4 md:px-8 2xl:px-0 min-h-full overflow-x-clip pt-[var(--height-header)] pb-32">
             {children}
           </main>
 

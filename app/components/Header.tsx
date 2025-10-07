@@ -40,27 +40,25 @@ export function Header({
     const observer = Observer.create({
       type: 'wheel,touch,pointer',
       wheelSpeed: -1,
-      onChangeY: (self) => {
-        if (self.deltaY < 0) {
-          // Hide when scrolling up
+      onUp: (self) => {
+        // Hide when scrolling up
+        if (self.deltaY < -300)
           GSAP.to(header, {
             yPercent: -100,
             duration: 0.5,
             ease: 'power3.out',
-            delay: 0.8,
-          });
-        } else if (self.deltaY > 0) {
-          // Show when scrolling down
-          GSAP.to(header, {
-            yPercent: 0,
-            duration: 0.5,
-            ease: 'power3.out',
             delay: 0.2,
           });
-        }
       },
-      tolerance: 10,
-      debounce: true,
+      onDown: () => {
+        // Show when scrolling down
+        GSAP.to(header, {
+          yPercent: 0,
+          duration: 0.5,
+          ease: 'power3.out',
+          delay: 0.2,
+        });
+      },
     });
     return () => {
       observer.kill();
@@ -70,7 +68,7 @@ export function Header({
   return (
     <header
       ref={headerRef}
-      className="fixed top-0 left-0 right-0 z-40 bg-primary/95 backdrop-blur-sm"
+      className="fixed top-0 left-0 right-0 z-40 bg-primary"
     >
       <div className="text-secondary flex items-end justify-between gap-32 bg-primary px-4 lg:px-8 2xl:px-0 py-2 h-header max-w-container mx-auto border-b border-b-secondary/20">
         {/* MOBILE CTAS */}
@@ -86,10 +84,9 @@ export function Header({
           }
           prefetch="intent"
           to="/"
-          // style={activeLinkStyle}
           end
         >
-          ARRVLS
+          {shop.name}
         </NavLink>
 
         {/* NAV MENU */}

@@ -1,6 +1,10 @@
-import {Suspense} from 'react';
-import {Await, NavLink} from 'react-router';
+import {Suspense, useRef} from 'react';
+import {Await, NavLink, useLocation} from 'react-router';
 import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
+
+import GSAP from 'gsap';
+import {useGSAP} from '@gsap/react';
+import {ScrollTrigger} from 'gsap/ScrollTrigger';
 
 interface FooterProps {
   footer: Promise<FooterQuery | null>;
@@ -16,17 +20,16 @@ export function Footer({
   return (
     <Suspense>
       <Await resolve={footerPromise}>
-        {(footer) => (
-          <footer className="text-secondary bg-primary border-t border-t-secondary/20 h-footer max-w-container mx-auto flex items-center justify-center">
-            {footer?.menu && header.shop.primaryDomain?.url && (
-              <FooterMenu
-                menu={footer.menu}
-                primaryDomainUrl={header.shop.primaryDomain.url}
-                publicStoreDomain={publicStoreDomain}
-              />
-            )}
-          </footer>
-        )}
+        {(footer) =>
+          footer?.menu && header.shop.primaryDomain?.url ? (
+            <FooterMenu
+              menu={footer.menu}
+              shop={header.shop}
+              primaryDomainUrl={header.shop.primaryDomain.url}
+              publicStoreDomain={publicStoreDomain}
+            />
+          ) : null
+        }
       </Await>
     </Suspense>
   );
@@ -34,49 +37,134 @@ export function Footer({
 
 function FooterMenu({
   menu,
+  shop,
   primaryDomainUrl,
   publicStoreDomain,
 }: {
   menu: FooterQuery['menu'];
+  shop: FooterProps['header']['shop'];
   primaryDomainUrl: FooterProps['header']['shop']['primaryDomain']['url'];
   publicStoreDomain: string;
 }) {
+  const footerContainerRef = useRef<HTMLDivElement>(null);
+  const footerContentRef = useRef<HTMLDivElement>(null);
+  const footerMaskRef = useRef<HTMLDivElement>(null);
+
+  const location = useLocation();
+
+  useGSAP(() => {
+    if (
+      !footerContainerRef.current ||
+      !footerContentRef.current ||
+      !footerMaskRef.current
+    )
+      return;
+
+    GSAP.registerPlugin(ScrollTrigger);
+
+    ScrollTrigger.getById('footer')?.refresh();
+
+    const tl = GSAP.timeline({
+      scrollTrigger: {
+        trigger: footerContainerRef.current,
+        id: 'footer',
+        start: 'top bottom',
+        end: 'bottom bottom',
+        scrub: 0,
+        invalidateOnRefresh: true,
+        // markers: true,
+      },
+    });
+
+    tl.fromTo(
+      footerMaskRef.current,
+      {yPercent: 0},
+      {
+        yPercent: -90,
+        ease: 'none',
+      },
+    ).fromTo(
+      footerContentRef.current,
+      {yPercent: -50},
+      {yPercent: 0, ease: 'none'},
+      0, // start at the same time as previous tween
+    );
+
+    return () => {
+      tl.kill();
+    };
+  }, [location.pathname]);
+
   return (
-    <nav
-      className="flex flex-wrap justify-center gap-4 px-4 md:px-8 2xl:px-0"
-      role="navigation"
+    <footer
+      ref={footerContainerRef}
+      className="relative text-secondary bg-primary border-t border-t-secondary/20 h-footer max-w-container mx-auto"
     >
-      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
-        if (!item.url) return null;
-        // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
-        const isExternal = !url.startsWith('/');
-        return isExternal ? (
-          <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
-            {item.title}
-          </a>
-        ) : (
+      <div className="absolute top-4 bottom-0 w-full z-50 overflow-clip">
+        <div
+          ref={footerMaskRef}
+          className="absolute inset-0 top-2 bg-primary z-20"
+        ></div>
+
+        <nav
+          ref={footerContentRef}
+          className="flex flex-wrap justify-between items-end gap-4 w-full h-full pb-16 px-4 md:px-8 2xl:px-0"
+          role="navigation"
+        >
+          {/* LOGO */}
           <NavLink
             className={({isActive}) =>
-              (isActive ? 'active text-secondary/50' : 'text-secondary') +
-              ' underlined-link'
+              (isActive ? 'text-secondary/80' : 'text-secondary') +
+              ' text-headline-large leading-none px-1 font-thin'
             }
-            end
-            key={item.id}
             prefetch="intent"
-            // style={activeLinkStyle}
-            to={url}
+            to="/"
+            end
           >
-            {item.title}
+            {shop.name}
           </NavLink>
-        );
-      })}
-    </nav>
+
+          {/* MENU ITEMS */}
+          <div className="flex flex-col gap-4 justify-end h-fit">
+            {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
+              if (!item.url) return null;
+              // if the url is internal, we strip the domain
+              const url =
+                item.url.includes('myshopify.com') ||
+                item.url.includes(publicStoreDomain) ||
+                item.url.includes(primaryDomainUrl)
+                  ? new URL(item.url).pathname
+                  : item.url;
+              const isExternal = !url.startsWith('/');
+              return isExternal ? (
+                <a
+                  href={url}
+                  key={item.id}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {item.title}
+                </a>
+              ) : (
+                <NavLink
+                  className={({isActive}) =>
+                    (isActive ? 'active text-secondary/50' : 'text-secondary') +
+                    ' underlined-link'
+                  }
+                  end
+                  key={item.id}
+                  prefetch="intent"
+                  // style={activeLinkStyle}
+                  to={url}
+                >
+                  {item.title}
+                </NavLink>
+              );
+            })}
+          </div>
+        </nav>
+      </div>
+    </footer>
   );
 }
 
