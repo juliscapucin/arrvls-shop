@@ -46,7 +46,7 @@ export default function ScrollMarquee({children}: ScrollMarqueeProps) {
   }, []);
 
   return (
-    <div className="relative w-screen max-w-container overflow-clip z-10 -mx-4 md:-mx-8 2xl:mx-0">
+    <div className="relative w-screen max-w-container overflow-clip z-10 -mx-4 md:-mx-8 2xl:mx-0 my-32 border-y border-secondary/20">
       <div ref={marqueeRef} className="w-fit">
         {children}
       </div>

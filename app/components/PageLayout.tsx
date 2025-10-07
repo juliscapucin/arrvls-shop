@@ -65,7 +65,7 @@ export function PageLayout({
             />
           )}
 
-          <main className="max-w-container mx-auto p-4 md:p-8 2xl:px-0 min-h-full overflow-x-clip">
+          <main className="max-w-container mx-auto px-4 md:px-8 2xl:px-0 min-h-full overflow-x-clip">
             {children}
           </main>
 

@@ -82,12 +82,12 @@ export default function Homepage() {
   );
 
   return (
-    <div className="home">
+    <div>
       <Showreel showreelImages={showreelImages || []} />
 
       {/* MARQUEE */}
       <ScrollMarquee>
-        <h1 className="heading-headline text-nowrap text-secondary border-y px-8 py-16 uppercase">
+        <h1 className="heading-headline text-nowrap text-secondary px-8 py-16 uppercase">
           A modern React & JavaScript component library powered by GSAP &
           Tailwind
         </h1>
@@ -134,7 +134,7 @@ function FeaturedProducts({
 }) {
   return (
     <div className="mt-24">
-      <h2 className="heading-display mb-4">Featured</h2>
+      {/* <h2 className="heading-display mb-4">Featured</h2> */}
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
@@ -172,7 +172,7 @@ const FEATURED_COLLECTION_QUERY = `#graphql
   }
   query FeaturedCollection($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
-    collection(handle: "all-products") {
+    collection(handle: "featured") {
       ...FeaturedCollection
     }
   }
@@ -196,7 +196,7 @@ const HOME_SHOWREEL_QUERY = `#graphql
     collection(handle: "home-showreel") {
       id
       title
-      products(first: 10) {
+      products(first: 7) {
         nodes {
           ...ShowreelProduct
         }

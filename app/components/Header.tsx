@@ -25,7 +25,7 @@ export function Header({
 }: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <header className="text-secondary flex items-end justify-between gap-32 bg-primary px-4 lg:px-8 2xl:px-0 py-2 h-header max-w-container mx-auto border-b border-b-secondary">
+    <header className="text-secondary flex items-end justify-between gap-32 bg-primary px-4 lg:px-8 2xl:px-0 py-2 h-header max-w-container mx-auto border-b border-b-secondary/20">
       {/* MOBILE CTAS */}
       <div className="md:hidden absolute top-4 right-4">
         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
