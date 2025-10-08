@@ -76,61 +76,60 @@ export default function Showreel({showreelImages}: ShowreelProps) {
   }, [slideIndex, showreelImages]);
 
   return (
-    <section className="relative h-[var(--showreel-height)] -mt-[1px] -mx-8 2xl:mx-0">
-      {/* TEXT */}
-      <div className="absolute inset-8 md:inset-0 grid grid-cols-12 grid-rows-5 overflow-clip z-10 mix-blend-difference">
-        <div className="col-start-2 col-end-10 lg:col-start-3 lg:col-end-7 row-start-2 p-4">
-          <p className="heading-headline text-pretty">
-            Craft smooth, responsive, and production-ready UI
-          </p>
+    <section className="relative h-[var(--showreel-height)] -mt-[1px] 2xl:mx-0 grid-texture">
+      <div className="max-w-container mx-auto w-full h-full overflow-clip">
+        {/* TEXT */}
+        <div className="absolute inset-8 md:inset-0 grid grid-cols-12 grid-rows-5 overflow-clip z-10 mix-blend-difference">
+          <div className="col-start-2 col-end-10 lg:col-start-3 lg:col-end-7 row-start-2 p-4">
+            <p className="heading-headline text-pretty">
+              Craft smooth, responsive, and production-ready UI
+            </p>
+          </div>
+          <div className="col-start-2 col-end-10 lg:col-start-3 lg:col-end-7 row-start-4 p-4">
+            <p className="heading-headline text-pretty">
+              Without reinventing the wheel
+            </p>
+          </div>
         </div>
-        <div className="col-start-2 col-end-10 lg:col-start-3 lg:col-end-7 row-start-4 p-4">
-          <p className="heading-headline text-pretty">
-            Without reinventing the wheel
-          </p>
+        {/* IMAGES */}
+        <div
+          ref={showreelRef}
+          className="relative w-full h-full grid grid-cols-12 grid-rows-5 overflow-clip md:hidden lg:grid"
+        >
+          {showreelImages.map((image, index) => {
+            return (
+              <div
+                className="w-full h-full transition-opacity duration-300 overflow-clip"
+                style={{
+                  gridColumnStart: isMobile
+                    ? gridLayoutMobile[index].colStart
+                    : gridLayoutDesktop[index].colStart,
+                  gridColumnEnd: isMobile
+                    ? gridLayoutMobile[index].colEnd
+                    : gridLayoutDesktop[index].colEnd,
+                  gridRowStart: isMobile
+                    ? gridLayoutMobile[index].rowStart
+                    : gridLayoutDesktop[index].rowStart,
+                  gridRowEnd: isMobile
+                    ? gridLayoutMobile[index].rowEnd
+                    : gridLayoutDesktop[index].rowEnd,
+                }}
+                key={`${image.id}-${index}`}
+              >
+                {/* <div className="absolute z-50">{index + 1}</div> */}
+                <Image
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${
+                    slideIndex === index ? 'opacity-100' : 'opacity-0'
+                  }`}
+                  src={image.url}
+                  alt="Showreel image"
+                  sizes="(max-width: 1200px) 100vw, 80vw"
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
-      {/* IMAGES */}
-      <div
-        ref={showreelRef}
-        className="relative w-full h-full grid grid-cols-12 grid-rows-5 overflow-clip border-b border-b-secondary/10 border-r border-r-secondary/10 md:hidden lg:grid"
-      >
-        {showreelImages.map((image, index) => {
-          return (
-            <div
-              className="w-full h-full transition-opacity duration-300 overflow-clip"
-              style={{
-                gridColumnStart: isMobile
-                  ? gridLayoutMobile[index].colStart
-                  : gridLayoutDesktop[index].colStart,
-                gridColumnEnd: isMobile
-                  ? gridLayoutMobile[index].colEnd
-                  : gridLayoutDesktop[index].colEnd,
-                gridRowStart: isMobile
-                  ? gridLayoutMobile[index].rowStart
-                  : gridLayoutDesktop[index].rowStart,
-                gridRowEnd: isMobile
-                  ? gridLayoutMobile[index].rowEnd
-                  : gridLayoutDesktop[index].rowEnd,
-              }}
-              key={`${image.id}-${index}`}
-            >
-              {/* <div className="absolute z-50">{index + 1}</div> */}
-              <Image
-                className={`w-full h-full object-cover transition-opacity duration-300 ${
-                  slideIndex === index ? 'opacity-100' : 'opacity-0'
-                }`}
-                src={image.url}
-                alt="Showreel image"
-                sizes="(max-width: 1200px) 100vw, 80vw"
-              />
-            </div>
-          );
-        })}
-      </div>
-
-      {/* OVERLAY */}
-      <div className="absolute inset-0 -z-10 grid-texture"></div>
     </section>
   );
 }

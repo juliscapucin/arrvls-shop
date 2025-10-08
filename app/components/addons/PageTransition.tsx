@@ -59,7 +59,7 @@ export default function PageTransition({children}: PageTransitionProps) {
   }, [location.pathname]);
 
   return (
-    <div className="relative overflow-hidden pointer-events-none">
+    <div className="relative overflow-hidden">
       <div
         ref={overlayRef}
         className={`fixed inset-0 bg-primary z-50 pointer-events-none ${slug ? 'opacity-0' : 'opacity-100'}`}

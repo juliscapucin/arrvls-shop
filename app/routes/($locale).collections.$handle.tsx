@@ -87,10 +87,10 @@ export default function Collection() {
   const [isCursorFollowerVisible, setIsCursorFollowerVisible] = useState(true);
 
   return (
-    <div>
+    <div className="w-full max-w-container mx-auto">
       <h1 className="heading-display mt-8">{collection.title}</h1>
       <p className="max-w-prose mb-4">{collection.description}</p>
-      <CursorFollower isVisible={isCursorFollowerVisible} variant="small" />
+      {/* <CursorFollower isVisible={isCursorFollowerVisible} variant="small" /> */}
       <PaginatedResourceSection
         connection={collection.products}
         resourcesClassName="grid gap-x-6 gap-y-40 grid-cols-12 mb-8"

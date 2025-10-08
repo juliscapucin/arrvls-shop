@@ -82,7 +82,7 @@ export default function Homepage() {
   );
 
   return (
-    <div>
+    <>
       <Showreel showreelImages={showreelImages || []} />
 
       {/* MARQUEE */}
@@ -95,7 +95,7 @@ export default function Homepage() {
 
       <FeaturedCollection collection={data.featuredCollection} />
       <FeaturedProducts products={data.featuredProducts} />
-    </div>
+    </>
   );
 }
 
@@ -108,11 +108,11 @@ function FeaturedCollection({
   const image = collection?.image;
   return (
     <Link
-      className="block relative h-[var(--showreel-height)] overflow-clip"
+      className="block relative h-[var(--showreel-height)] w-full max-w-container mx-auto"
       to={`/collections/${collection.handle}`}
     >
       {image && (
-        <div className="relative w-full h-full">
+        <div className="relative w-full h-full overflow-clip">
           <Image
             className="w-full h-full object-cover"
             data={image}
@@ -138,7 +138,7 @@ function FeaturedProducts({
       <Suspense fallback={<div>Loading...</div>}>
         <Await resolve={products}>
           {(response) => (
-            <div className="grid gap-x-6 gap-y-40 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-x-6 gap-y-40 md:grid-cols-2 lg:grid-cols-3 w-full max-w-container mx-auto">
               {response
                 ? response.collection?.products.nodes.map((product, index) => (
                     <ProductItem

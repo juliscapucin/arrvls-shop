@@ -110,7 +110,7 @@ function ArticleItem({
 
   return (
     <div className="relative" key={article.id}>
-      <CursorFollower isVisible={isVisible} variant="small" />
+      {/* <CursorFollower isVisible={isVisible} variant="small" /> */}
       <Link
         onMouseEnter={() => setIsVisible(true)}
         onMouseLeave={() => setIsVisible(false)}
