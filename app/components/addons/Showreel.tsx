@@ -17,23 +17,23 @@ type ShowreelProps = {
 
 // Layout for the grid (12 columns, 3 rows, max 10 images)
 const gridLayoutDesktop = [
-  {colStart: 1, colEnd: 4, rowStart: 3, rowEnd: 5},
-  {colStart: 6, colEnd: 9, rowStart: 1, rowEnd: 3},
-  {colStart: 9, colEnd: 13, rowStart: 2, rowEnd: 5},
-  {colStart: 8, colEnd: 12, rowStart: 1, rowEnd: 4},
-  {colStart: 9, colEnd: 13, rowStart: 3, rowEnd: 6},
-  {colStart: 1, colEnd: 5, rowStart: 1, rowEnd: 4},
-  {colStart: 7, colEnd: 11, rowStart: 2, rowEnd: 5},
+  {colStart: 1, rowStart: 3},
+  {colStart: 5, rowStart: 1},
+  {colStart: 8, rowStart: 2},
+  {colStart: 7, rowStart: 1},
+  {colStart: 8, rowStart: 3},
+  {colStart: 1, rowStart: 1},
+  {colStart: 7, rowStart: 2},
 ];
 
 const gridLayoutMobile = [
-  {colStart: 2, colEnd: 9, rowStart: 1, rowEnd: 3},
-  {colStart: 6, colEnd: 13, rowStart: 2, rowEnd: 4},
-  {colStart: 3, colEnd: 10, rowStart: 3, rowEnd: 5},
-  {colStart: 4, colEnd: 11, rowStart: 1, rowEnd: 3},
-  {colStart: 5, colEnd: 12, rowStart: 3, rowEnd: 5},
-  {colStart: 1, colEnd: 8, rowStart: 4, rowEnd: 6},
-  {colStart: 4, colEnd: 11, rowStart: 2, rowEnd: 4},
+  {colStart: 1, rowStart: 1},
+  {colStart: 6, rowStart: 2},
+  {colStart: 3, rowStart: 3},
+  {colStart: 7, rowStart: 1},
+  {colStart: 5, rowStart: 2},
+  {colStart: 1, rowStart: 1},
+  {colStart: 7, rowStart: 2},
 ];
 
 export default function Showreel({showreelImages}: ShowreelProps) {
@@ -99,7 +99,7 @@ export default function Showreel({showreelImages}: ShowreelProps) {
           {showreelImages.map((image, index) => {
             return (
               <div
-                className={`w-full h-full transition-opacity duration-300 overflow-clip flex items-center justify-center ${
+                className={`relative w-full h-full transition-opacity duration-300 overflow-clip flex items-center justify-center ${
                   slideIndex === index ? 'opacity-100' : 'opacity-0'
                 }`}
                 style={{
@@ -107,14 +107,14 @@ export default function Showreel({showreelImages}: ShowreelProps) {
                     ? gridLayoutMobile[index]?.colStart
                     : gridLayoutDesktop[index]?.colStart,
                   gridColumnEnd: isMobile
-                    ? gridLayoutMobile[index]?.colEnd
-                    : gridLayoutDesktop[index]?.colEnd,
+                    ? gridLayoutMobile[index]?.colStart + 6
+                    : gridLayoutDesktop[index]?.colStart + 5,
                   gridRowStart: isMobile
                     ? gridLayoutMobile[index]?.rowStart
                     : gridLayoutDesktop[index]?.rowStart,
                   gridRowEnd: isMobile
-                    ? gridLayoutMobile[index]?.rowEnd
-                    : gridLayoutDesktop[index]?.rowEnd,
+                    ? gridLayoutMobile[index]?.rowStart + 3
+                    : gridLayoutDesktop[index]?.rowStart + 3,
                 }}
                 key={`${image.id}-${index}`}
               >

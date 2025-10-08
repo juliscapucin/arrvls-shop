@@ -18,9 +18,9 @@ import {ProductItem} from '~/components/ProductItem';
 import {Showreel, ScrollMarquee} from '~/components/addons';
 
 const gridLayout = [
-  'col-start-1 col-end-7',
-  'col-start-5 col-end-9',
-  'col-start-1 col-end-7',
+  'col-start-1 col-end-3',
+  'col-start-5 col-end-7',
+  'col-start-3 col-end-7',
   'col-start-9 col-end-13',
   'col-start-7 col-end-13',
 ];
