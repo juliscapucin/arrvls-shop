@@ -8,8 +8,10 @@ import {Money, Image, flattenConnection} from '@shopify/hydrogen';
 import type {OrderLineItemFullFragment} from 'customer-accountapi.generated';
 import {CUSTOMER_ORDER_QUERY} from '~/graphql/customer-account/CustomerOrderQuery';
 
+import APP_NAME from '~/data/appName';
+
 export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Order ${data?.order?.name}`}];
+  return [{title: `${APP_NAME} | Order ${data?.order?.name}`}];
 };
 
 export async function loader({params, context}: LoaderFunctionArgs) {

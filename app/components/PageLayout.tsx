@@ -68,7 +68,7 @@ export function PageLayout({
         <PageTransition>
           <div id="smooth-wrapper">
             <div id="smooth-content">
-              <main className="px-4 md:px-8 2xl:px-0 min-h-full pt-[var(--height-header)] pb-32">
+              <main className="px-4 md:px-8 2xl:px-0 min-h-full pt-[calc(var(--height-header)+calc(var(--spacing)*8))] pb-32">
                 {children}
               </main>
 

@@ -83,7 +83,7 @@ export default function Article() {
   }).format(new Date(article.publishedAt));
 
   return (
-    <div>
+    <div className="w-full max-w-container mx-auto">
       <time dateTime={article.publishedAt}>{publishedDate}</time>
       {/* <address>{author?.name}</address> */}
 

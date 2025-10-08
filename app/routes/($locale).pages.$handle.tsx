@@ -5,8 +5,10 @@ import {
 } from 'react-router';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 
+import APP_NAME from '~/data/appName';
+
 export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Hydrogen | ${data?.page.title ?? ''}`}];
+  return [{title: `${APP_NAME} | ${data?.page.title ?? ''}`}];
 };
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -65,9 +67,9 @@ export default function Page() {
   const {page} = useLoaderData<typeof loader>();
 
   return (
-    <div className="page">
+    <div className="w-full max-w-container mx-auto">
       <header>
-        <h1 className="heading-display mt-8">{page.title}</h1>
+        <h1 className="heading-display">{page.title}</h1>
       </header>
       <main
         className="max-w-prose mt-16 [&>div>h3]:heading-headline [&>div>h3]:mt-8"

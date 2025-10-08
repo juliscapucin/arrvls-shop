@@ -11,8 +11,10 @@ import {ProductItem} from '~/components/ProductItem';
 import {CursorFollower} from '~/components/addons';
 import {useState} from 'react';
 
+import APP_NAME from '~/data/appName';
+
 export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
+  return [{title: `${APP_NAME} | ${data?.collection.title ?? ''} Collection`}];
 };
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -88,7 +90,7 @@ export default function Collection() {
 
   return (
     <div className="w-full max-w-container mx-auto">
-      <h1 className="heading-display mt-8">{collection.title}</h1>
+      <h1 className="heading-display">{collection.title}</h1>
       <p className="max-w-prose mb-4">{collection.description}</p>
       {/* <CursorFollower isVisible={isCursorFollowerVisible} variant="small" /> */}
       <PaginatedResourceSection

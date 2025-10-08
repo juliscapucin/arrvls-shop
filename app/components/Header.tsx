@@ -45,7 +45,7 @@ export function Header({
       wheelSpeed: -1,
       onUp: (self) => {
         // Hide when scrolling up
-        if (self.deltaY < -200)
+        if (self.deltaY < -200 && window.scrollY > 200)
           GSAP.to(header, {
             yPercent: -100,
             duration: 0.5,
@@ -71,10 +71,10 @@ export function Header({
   return (
     <header
       ref={headerRef}
-      className="fixed top-0 left-0 right-0 z-40 bg-secondary/5 backdrop-blur-2xl"
+      className="fixed top-0 left-0 right-0 z-40 bg-secondary/5 backdrop-blur-2xl h-header"
     >
       {/* CONTAINER */}
-      <div className="text-secondary flex items-end justify-between gap-32 px-4 lg:px-8 2xl:px-0 h-header max-w-container mx-auto mb-4">
+      <div className="text-secondary flex items-end justify-between gap-32 px-4 lg:px-8 2xl:px-0 h-header max-w-container mx-auto pb-4">
         {/* MOBILE CTAS */}
         <div className="md:hidden absolute top-4 right-4">
           <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
@@ -84,7 +84,7 @@ export function Header({
         <NavLink
           className={({isActive}) =>
             (isActive ? 'text-secondary/80' : 'text-secondary') +
-            ' text-headline-large leading-none px-1 font-thin'
+            ' text-headline-large leading-none font-thin'
           }
           prefetch="intent"
           to="/"

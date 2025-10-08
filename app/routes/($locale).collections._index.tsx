@@ -1,7 +1,18 @@
-import {useLoaderData, Link, type LoaderFunctionArgs} from 'react-router';
+import {
+  useLoaderData,
+  Link,
+  type LoaderFunctionArgs,
+  MetaFunction,
+} from 'react-router';
 import {getPaginationVariables, Image} from '@shopify/hydrogen';
 import type {CollectionFragment} from 'storefrontapi.generated';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+
+import APP_NAME from '~/data/appName';
+
+export const meta: MetaFunction<typeof loader> = () => {
+  return [{title: `${APP_NAME} | Products`}];
+};
 
 export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte

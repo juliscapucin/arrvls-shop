@@ -11,8 +11,10 @@ type SelectedPolicies = keyof Pick<
   'privacyPolicy' | 'shippingPolicy' | 'termsOfService' | 'refundPolicy'
 >;
 
+import APP_NAME from '~/data/appName';
+
 export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Hydrogen | ${data?.policy.title ?? ''}`}];
+  return [{title: `${APP_NAME} | ${data?.policy.title ?? ''}`}];
 };
 
 export async function loader({params, context}: LoaderFunctionArgs) {

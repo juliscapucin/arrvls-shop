@@ -60,41 +60,37 @@ function FooterMenu({
     )
       return;
 
-    console.log(location.pathname);
-
     GSAP.registerPlugin(ScrollTrigger);
 
     ScrollTrigger.getById('footer')?.refresh();
 
-    const tl = GSAP.timeline({
-      scrollTrigger: {
-        trigger: footerContainerRef.current,
-        id: 'footer',
-        start: 'top bottom',
-        end: 'bottom bottom',
-        scrub: 0,
-        invalidateOnRefresh: true,
-        // markers: true,
-      },
-    });
+    setTimeout(() => {
+      const tl = GSAP.timeline({
+        scrollTrigger: {
+          trigger: footerContainerRef.current,
+          id: 'footer',
+          start: 'top bottom',
+          end: 'bottom bottom',
+          scrub: 0,
+          invalidateOnRefresh: true,
+          // markers: true,
+        },
+      });
 
-    tl.fromTo(
-      footerMaskRef.current,
-      {yPercent: 0},
-      {
-        yPercent: -100,
-        ease: 'none',
-      },
-    ).fromTo(
-      footerContentRef.current,
-      {yPercent: -60},
-      {yPercent: 0, ease: 'none'},
-      0, // start at the same time as previous tween
-    );
-
-    return () => {
-      tl.kill();
-    };
+      tl.fromTo(
+        footerMaskRef.current,
+        {yPercent: 0},
+        {
+          yPercent: -100,
+          ease: 'none',
+        },
+      ).fromTo(
+        footerContentRef.current,
+        {yPercent: -60},
+        {yPercent: 0, ease: 'none'},
+        0, // start at the same time as previous tween
+      );
+    }, 1000);
   }, [location.pathname]);
 
   return (

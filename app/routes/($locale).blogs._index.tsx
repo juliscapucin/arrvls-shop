@@ -7,8 +7,10 @@ import {
 import {getPaginationVariables} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 
-export const meta: MetaFunction = () => {
-  return [{title: `Hydrogen | Blogs`}];
+import APP_NAME from '~/data/appName';
+
+export const meta: MetaFunction<typeof loader> = () => {
+  return [{title: `${APP_NAME} | Blogs`}];
 };
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -55,7 +57,7 @@ export default function Blogs() {
   const {blogs} = useLoaderData<typeof loader>();
 
   return (
-    <div className="blogs">
+    <div className="w-full max-w-container mx-auto">
       <h1 className="heading-display">Blogs</h1>
       <div className="blogs-grid">
         <PaginatedResourceSection connection={blogs}>

@@ -34,6 +34,7 @@ export default function ScrollMarquee({
         xPercent: () => -(element.offsetWidth / 2 / element.offsetWidth) * 100,
         ease: 'none',
         scrollTrigger: {
+          id: 'scrollMarquee',
           trigger: element,
           start: 'top bottom',
           end: 'bottom top',

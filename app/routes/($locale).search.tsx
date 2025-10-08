@@ -41,7 +41,7 @@ export default function SearchPage() {
   if (type === 'predictive') return null;
 
   return (
-    <div>
+    <div className="w-full max-w-container mx-auto">
       <h1 className="heading-display">Search</h1>
       <div className="border-b py-16">
         <SearchForm className="max-w-xl mx-auto">

@@ -10,8 +10,10 @@ import type {CartQueryDataReturn} from '@shopify/hydrogen';
 import {CartForm} from '@shopify/hydrogen';
 import {CartMain} from '~/components/CartMain';
 
+import APP_NAME from '~/data/appName';
+
 export const meta: MetaFunction = () => {
-  return [{title: `Hydrogen | Cart`}];
+  return [{title: `${APP_NAME} | Cart`}];
 };
 
 export const headers: HeadersFunction = ({actionHeaders}) => actionHeaders;

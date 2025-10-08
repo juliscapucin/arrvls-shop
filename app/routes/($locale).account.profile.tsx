@@ -87,7 +87,7 @@ export default function AccountProfile() {
   const customer = action?.customer ?? account?.customer;
 
   return (
-    <div>
+    <div className="w-full max-w-container mx-auto">
       <h2 className="heading-headline">My profile</h2>
       <Form method="PUT">
         <legend>Personal information</legend>

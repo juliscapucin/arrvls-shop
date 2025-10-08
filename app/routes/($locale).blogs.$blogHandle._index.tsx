@@ -11,8 +11,10 @@ import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {useState} from 'react';
 import {CursorFollower} from '~/components/addons';
 
+import APP_NAME from '~/data/appName';
+
 export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Hydrogen | ${data?.blog.title ?? ''} blog`}];
+  return [{title: `${APP_NAME} | ${data?.blog.title ?? ''} blog`}];
 };
 
 export async function loader(args: LoaderFunctionArgs) {
@@ -75,7 +77,7 @@ export default function Blog() {
   const {articles} = blog;
 
   return (
-    <div className="blog">
+    <div className="w-full max-w-container mx-auto">
       <h1 className="heading-display">{blog.title}</h1>
 
       {/* BLOG GRID */}

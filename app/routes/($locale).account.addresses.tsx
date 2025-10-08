@@ -29,8 +29,10 @@ export type ActionResponse = {
   updatedAddress?: AddressFragment;
 };
 
-export const meta: MetaFunction = () => {
-  return [{title: 'Addresses'}];
+import APP_NAME from '~/data/appName';
+
+export const meta: MetaFunction<typeof loader> = () => {
+  return [{title: `${APP_NAME} | Addresses`}];
 };
 
 export async function loader({context}: LoaderFunctionArgs) {
@@ -255,7 +257,7 @@ export default function Addresses() {
   const {defaultAddress, addresses} = customer;
 
   return (
-    <div className="account-addresses">
+    <div className="w-full max-w-container mx-auto">
       <h2 className="heading-headline mt-8">Addresses</h2>
       <br />
       {!addresses.nodes.length ? (

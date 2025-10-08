@@ -25,8 +25,10 @@ const gridLayout = [
   'col-start-7 col-end-13',
 ];
 
-export const meta: MetaFunction = () => {
-  return [{title: 'ARRVLS | Home'}];
+import APP_NAME from '~/data/appName';
+
+export const meta: MetaFunction<typeof loader> = ({data}) => {
+  return [{title: `${APP_NAME} | Home`}];
 };
 
 export async function loader(args: LoaderFunctionArgs) {

@@ -7,8 +7,10 @@ import {getPaginationVariables, Image, Money} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductItem} from '~/components/ProductItem';
 
+import APP_NAME from '~/data/appName';
+
 export const meta: MetaFunction<typeof loader> = () => {
-  return [{title: `Hydrogen | Products`}];
+  return [{title: `${APP_NAME} | Products`}];
 };
 
 export async function loader(args: LoaderFunctionArgs) {

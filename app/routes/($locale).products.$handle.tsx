@@ -17,9 +17,11 @@ import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 
+import APP_NAME from '~/data/appName';
+
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [
-    {title: `Hydrogen | ${data?.product.title ?? ''}`},
+    {title: `${APP_NAME} | ${data?.product.title ?? ''}`},
     {
       rel: 'canonical',
       href: `/products/${data?.product.handle}`,
@@ -106,7 +108,7 @@ export default function Product() {
   const {title, descriptionHtml} = product;
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 w-full max-w-container mx-auto">
       <ProductImage image={selectedVariant?.image} />
       <div className="sticky top-4">
         <h1 className="heading-headline">{title}</h1>
