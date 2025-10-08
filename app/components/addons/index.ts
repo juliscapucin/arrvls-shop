@@ -3,5 +3,13 @@ import CursorFollower from './CursorFollower';
 import PageTransition from './PageTransition';
 import ScrollMarquee from './ScrollMarquee';
 import Showreel from './Showreel';
+import ThemeToggle from './ThemeToggle';
 
-export {Accordion, CursorFollower, PageTransition, ScrollMarquee, Showreel};
+export {
+  Accordion,
+  CursorFollower,
+  PageTransition,
+  ScrollMarquee,
+  Showreel,
+  ThemeToggle,
+};

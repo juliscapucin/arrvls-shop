@@ -14,6 +14,7 @@ GSAP.registerPlugin(Observer);
 
 import {usePageTransition} from '~/components/addons/PageTransition';
 import {useAside} from '~/components/Aside';
+import {ThemeToggle} from '~/components/addons';
 
 interface HeaderProps {
   header: HeaderQuery;
@@ -197,7 +198,7 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="flex items-end gap-4 z-50" role="navigation">
+    <nav className="flex items-center gap-4 z-50" role="navigation">
       {/* ACCOUNT */}
       <NavLink
         prefetch="intent"
@@ -220,6 +221,9 @@ function HeaderCtas({
 
       {/* CART */}
       <CartToggle cart={cart} />
+
+      {/* THEME TOGGLE */}
+      <ThemeToggle variant="toggle" classes="ml-8" />
     </nav>
   );
 }

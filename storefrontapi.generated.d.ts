@@ -313,7 +313,7 @@ export type FeaturedCollectionQuery = {
 };
 
 export type ShowreelProductFragment = {
-  images: {
+  firstImage: {
     nodes: Array<
       Pick<StorefrontAPI.Image, 'id' | 'url' | 'altText' | 'width' | 'height'>
     >;
@@ -330,7 +330,7 @@ export type HomeShowreelQuery = {
     Pick<StorefrontAPI.Collection, 'id' | 'title'> & {
       products: {
         nodes: Array<{
-          images: {
+          firstImage: {
             nodes: Array<
               Pick<
                 StorefrontAPI.Image,
@@ -1229,7 +1229,7 @@ interface GeneratedQueryTypes {
     return: FeaturedCollectionQuery;
     variables: FeaturedCollectionQueryVariables;
   };
-  '#graphql\n  fragment ShowreelProduct on Product {\n    images(first: 10) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n  query HomeShowreel($country: CountryCode, $language: LanguageCode)\n    @inContext(country: $country, language: $language) {\n    collection(handle: "home-showreel") {\n      id\n      title\n      products(first: 7) {\n        nodes {\n          ...ShowreelProduct\n        }\n      }\n    }\n  }\n': {
+  '#graphql\n  fragment ShowreelProduct on Product {\n    firstImage: images(first: 1) {\n      nodes {\n        id\n        url\n        altText\n        width\n        height\n      }\n    }\n  }\n\n  query HomeShowreel($country: CountryCode, $language: LanguageCode)\n    @inContext(country: $country, language: $language) {\n    collection(handle: "home-showreel") {\n      id\n      title\n      products(first: 7) {\n        nodes {\n          ...ShowreelProduct\n        }\n      }\n    }\n  }\n': {
     return: HomeShowreelQuery;
     variables: HomeShowreelQueryVariables;
   };

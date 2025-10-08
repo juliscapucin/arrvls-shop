@@ -79,9 +79,10 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
 
-  const showreelImages = data.homeShowreel?.products.nodes.flatMap(
-    (product: any) => product.images.nodes,
-  );
+  const showreelImages =
+    data.homeShowreel?.products.nodes.flatMap((product: any) =>
+      product.firstImage?.nodes?.[0] ? [product.firstImage.nodes[0]] : [],
+    ) ?? [];
 
   return (
     <>
@@ -182,7 +183,7 @@ const FEATURED_COLLECTION_QUERY = `#graphql
 
 const HOME_SHOWREEL_QUERY = `#graphql
   fragment ShowreelProduct on Product {
-    images(first: 10) {
+    firstImage: images(first: 1) {
       nodes {
         id
         url

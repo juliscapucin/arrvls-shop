@@ -17,13 +17,13 @@ type ShowreelProps = {
 
 // Layout for the grid (12 columns, 3 rows, max 10 images)
 const gridLayoutDesktop = [
-  {colStart: 1, colEnd: 5, rowStart: 3, rowEnd: 6},
-  {colStart: 6, colEnd: 11, rowStart: 1, rowEnd: 4},
-  {colStart: 10, colEnd: 13, rowStart: 2, rowEnd: 4},
-  {colStart: 8, colEnd: 13, rowStart: 1, rowEnd: 5},
+  {colStart: 1, colEnd: 4, rowStart: 3, rowEnd: 5},
+  {colStart: 6, colEnd: 9, rowStart: 1, rowEnd: 3},
   {colStart: 9, colEnd: 13, rowStart: 2, rowEnd: 5},
-  {colStart: 1, colEnd: 4, rowStart: 1, rowEnd: 3},
-  {colStart: 7, colEnd: 13, rowStart: 2, rowEnd: 6},
+  {colStart: 8, colEnd: 12, rowStart: 1, rowEnd: 4},
+  {colStart: 9, colEnd: 13, rowStart: 3, rowEnd: 6},
+  {colStart: 1, colEnd: 5, rowStart: 1, rowEnd: 4},
+  {colStart: 7, colEnd: 11, rowStart: 2, rowEnd: 5},
 ];
 
 const gridLayoutMobile = [
@@ -76,7 +76,7 @@ export default function Showreel({showreelImages}: ShowreelProps) {
   }, [slideIndex, showreelImages]);
 
   return (
-    <section className="relative h-[var(--showreel-height)] -mt-[1px] 2xl:mx-0 grid-texture">
+    <section className="relative h-[var(--showreel-height)] -mt-8 2xl:mx-0 grid-texture border-b-secondary/5 border-b">
       <div className="max-w-container mx-auto w-full h-full overflow-clip">
         {/* TEXT */}
         <div className="absolute inset-8 md:inset-0 grid grid-cols-12 grid-rows-5 overflow-clip z-10 mix-blend-difference">
@@ -99,32 +99,35 @@ export default function Showreel({showreelImages}: ShowreelProps) {
           {showreelImages.map((image, index) => {
             return (
               <div
-                className="w-full h-full transition-opacity duration-300 overflow-clip"
+                className={`w-full h-full transition-opacity duration-300 overflow-clip flex items-center justify-center ${
+                  slideIndex === index ? 'opacity-100' : 'opacity-0'
+                }`}
                 style={{
                   gridColumnStart: isMobile
-                    ? gridLayoutMobile[index].colStart
-                    : gridLayoutDesktop[index].colStart,
+                    ? gridLayoutMobile[index]?.colStart
+                    : gridLayoutDesktop[index]?.colStart,
                   gridColumnEnd: isMobile
-                    ? gridLayoutMobile[index].colEnd
-                    : gridLayoutDesktop[index].colEnd,
+                    ? gridLayoutMobile[index]?.colEnd
+                    : gridLayoutDesktop[index]?.colEnd,
                   gridRowStart: isMobile
-                    ? gridLayoutMobile[index].rowStart
-                    : gridLayoutDesktop[index].rowStart,
+                    ? gridLayoutMobile[index]?.rowStart
+                    : gridLayoutDesktop[index]?.rowStart,
                   gridRowEnd: isMobile
-                    ? gridLayoutMobile[index].rowEnd
-                    : gridLayoutDesktop[index].rowEnd,
+                    ? gridLayoutMobile[index]?.rowEnd
+                    : gridLayoutDesktop[index]?.rowEnd,
                 }}
                 key={`${image.id}-${index}`}
               >
-                {/* <div className="absolute z-50">{index + 1}</div> */}
-                <Image
-                  className={`w-full h-full object-cover transition-opacity duration-300 ${
-                    slideIndex === index ? 'opacity-100' : 'opacity-0'
-                  }`}
-                  src={image.url}
-                  alt="Showreel image"
-                  sizes="(max-width: 1200px) 100vw, 80vw"
-                />
+                <div className="w-[90%] h-[70%] relative overflow-clip rounded-2xl bg-black p-2">
+                  <div className="w-full h-full relative overflow-clip rounded-xl">
+                    <Image
+                      className={`w-full h-full object-cover`}
+                      src={image.url}
+                      alt="Showreel image"
+                      sizes="(max-width: 1200px) 100vw, 80vw"
+                    />
+                  </div>
+                </div>
               </div>
             );
           })}
