@@ -19,6 +19,8 @@ import GSAP from 'gsap';
 import {useGSAP} from '@gsap/react';
 import {ScrollSmoother} from 'gsap/ScrollSmoother';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
+import Page from '~/routes/($locale).pages.$handle';
+import {PageTransition} from '~/components/addons';
 GSAP.registerPlugin(ScrollSmoother, ScrollTrigger);
 
 interface PageLayoutProps {
@@ -48,30 +50,37 @@ export function PageLayout({
 
   return (
     <Aside.Provider>
-      <CartAside cart={cart} />
-      <SearchAside />
-      <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
-      {header && (
-        <Header
+      <PageTransition.Provider>
+        <CartAside cart={cart} />
+        <SearchAside />
+        <MobileMenuAside
           header={header}
-          cart={cart}
-          isLoggedIn={isLoggedIn}
           publicStoreDomain={publicStoreDomain}
         />
-      )}
-      <div id="smooth-wrapper">
-        <div id="smooth-content">
-          <main className="max-w-container mx-auto px-4 md:px-8 2xl:px-0 min-h-full overflow-x-clip pt-[var(--height-header)] pb-32">
-            {children}
-          </main>
-
-          <Footer
-            footer={footer}
+        {header && (
+          <Header
             header={header}
+            cart={cart}
+            isLoggedIn={isLoggedIn}
             publicStoreDomain={publicStoreDomain}
           />
-        </div>
-      </div>
+        )}
+        <PageTransition>
+          <div id="smooth-wrapper">
+            <div id="smooth-content">
+              <main className="max-w-container mx-auto px-4 md:px-8 2xl:px-0 min-h-full overflow-x-clip pt-[var(--height-header)] pb-32">
+                {children}
+              </main>
+
+              <Footer
+                footer={footer}
+                header={header}
+                publicStoreDomain={publicStoreDomain}
+              />
+            </div>
+          </div>
+        </PageTransition>
+      </PageTransition.Provider>
     </Aside.Provider>
   );
 }

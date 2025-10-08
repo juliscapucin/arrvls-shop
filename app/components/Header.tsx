@@ -12,6 +12,7 @@ import {useGSAP} from '@gsap/react';
 import {Observer} from 'gsap/Observer';
 GSAP.registerPlugin(Observer);
 
+import {usePageTransition} from '~/components/addons/PageTransition';
 import {useAside} from '~/components/Aside';
 
 interface HeaderProps {
@@ -31,7 +32,9 @@ export function Header({
 }: HeaderProps) {
   const {shop, menu} = header;
   const headerRef = useRef<HTMLElement | null>(null);
+  const {handleSlug} = usePageTransition();
 
+  // RETRACTABLE HEADER ON SCROLL
   useGSAP(() => {
     if (!headerRef.current) return;
 
@@ -86,6 +89,10 @@ export function Header({
           prefetch="intent"
           to="/"
           end
+          onClick={(e) => {
+            e.preventDefault();
+            handleSlug?.('/');
+          }}
         >
           {shop.name}
         </NavLink>
@@ -120,6 +127,7 @@ export function HeaderMenu({
   publicStoreDomain: HeaderProps['publicStoreDomain'];
 }) {
   const {close} = useAside();
+  const {handleSlug} = usePageTransition();
   const headerStyles = `${viewport === 'mobile' ? 'flex flex-col items-center' : 'hidden lg:flex flex-1 justify-center'} gap-6`;
 
   return (
@@ -132,10 +140,14 @@ export function HeaderMenu({
             ' underlined-link text-headline-large font-thin leading-16'
           }
           end
-          onClick={close}
           prefetch="intent"
           // style={activeLinkStyle}
           to="/"
+          onClick={(e) => {
+            e.preventDefault();
+            close();
+            handleSlug?.('/');
+          }}
         >
           Home
         </NavLink>
@@ -163,10 +175,14 @@ export function HeaderMenu({
             }
             end
             key={item.id}
-            onClick={close}
             prefetch="intent"
             // style={activeLinkStyle}
             to={url}
+            onClick={(e) => {
+              e.preventDefault();
+              close();
+              handleSlug?.(url);
+            }}
           >
             {item.title}
           </NavLink>
