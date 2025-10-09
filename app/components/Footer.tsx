@@ -5,6 +5,7 @@ import type {FooterQuery, HeaderQuery} from 'storefrontapi.generated';
 import GSAP from 'gsap';
 import {useGSAP} from '@gsap/react';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
+import {usePageTransition} from '~/components/addons/PageTransition';
 
 interface FooterProps {
   footer: Promise<FooterQuery | null>;
@@ -46,12 +47,15 @@ function FooterMenu({
   primaryDomainUrl: FooterProps['header']['shop']['primaryDomain']['url'];
   publicStoreDomain: string;
 }) {
+  const {handleSlug} = usePageTransition();
+
   const footerContainerRef = useRef<HTMLDivElement>(null);
   const footerContentRef = useRef<HTMLDivElement>(null);
   const footerMaskRef = useRef<HTMLDivElement>(null);
 
   const location = useLocation();
 
+  // FOOTER REVEAL + PARALLAX ON SCROLL
   useGSAP(() => {
     if (
       !footerContainerRef.current ||
@@ -61,6 +65,8 @@ function FooterMenu({
       return;
 
     GSAP.registerPlugin(ScrollTrigger);
+
+    ScrollTrigger.clearScrollMemory();
 
     ScrollTrigger.getById('footer')?.refresh();
 
@@ -90,7 +96,7 @@ function FooterMenu({
         {yPercent: 0, ease: 'none'},
         0, // start at the same time as previous tween
       );
-    }, 1000);
+    }, 100); // needs to be declared after scrollSmoother on PageLayout
   }, [location.pathname]);
 
   return (
@@ -116,12 +122,18 @@ function FooterMenu({
           {/* LOGO */}
           <NavLink
             className={({isActive}) =>
-              (isActive ? 'text-secondary/80' : 'text-secondary') +
+              (isActive
+                ? 'text-secondary/80 pointer-events-none'
+                : 'text-secondary') +
               ' text-headline-large leading-none px-1 font-thin'
             }
             prefetch="intent"
             to="/"
             end
+            onClick={(e) => {
+              e.preventDefault();
+              handleSlug?.('/');
+            }}
           >
             {shop.name}
           </NavLink>
@@ -150,14 +162,19 @@ function FooterMenu({
               ) : (
                 <NavLink
                   className={({isActive}) =>
-                    (isActive ? 'active text-secondary/50' : 'text-secondary') +
-                    ' underlined-link'
+                    (isActive
+                      ? 'active text-secondary/50 pointer-events-none'
+                      : 'text-secondary') + ' underlined-link'
                   }
                   end
                   key={item.id}
                   prefetch="intent"
                   // style={activeLinkStyle}
                   to={url}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleSlug?.(url);
+                  }}
                 >
                   {item.title}
                 </NavLink>

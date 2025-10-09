@@ -1,5 +1,5 @@
-import {Await, Link} from 'react-router';
-import {Suspense, useId} from 'react';
+import {Await, Link, useLocation} from 'react-router';
+import {Suspense, useId, useRef} from 'react';
 import type {
   CartApiQueryFragment,
   FooterQuery,
@@ -21,7 +21,6 @@ import {ScrollSmoother} from 'gsap/ScrollSmoother';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import Page from '~/routes/($locale).pages.$handle';
 import {PageTransition} from '~/components/addons';
-GSAP.registerPlugin(ScrollSmoother, ScrollTrigger);
 
 interface PageLayoutProps {
   cart: Promise<CartApiQueryFragment | null>;
@@ -40,13 +39,21 @@ export function PageLayout({
   isLoggedIn,
   publicStoreDomain,
 }: PageLayoutProps) {
+  const location = useLocation();
+  const smootherRef = useRef<ScrollSmoother | null>(null);
+  GSAP.registerPlugin(ScrollSmoother, ScrollTrigger);
+
   useGSAP(() => {
     // create the scrollSmoother before your scrollTriggers
-    ScrollSmoother.create({
+    smootherRef.current = ScrollSmoother.create({
       smooth: 1, // how long (in seconds) it takes to "catch up" to the native scroll position
       effects: false, // looks for data-speed and data-lag attributes on elements
     });
   }, []);
+
+  useGSAP(() => {
+    smootherRef.current?.scrollTo(0, false);
+  }, [location.pathname]);
 
   return (
     <Aside.Provider>

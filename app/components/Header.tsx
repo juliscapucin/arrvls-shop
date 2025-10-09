@@ -1,5 +1,5 @@
 import {Suspense, useRef} from 'react';
-import {Await, NavLink, useAsyncValue} from 'react-router';
+import {Await, NavLink, useAsyncValue, useLocation} from 'react-router';
 import {
   type CartViewPayload,
   useAnalytics,
@@ -33,7 +33,9 @@ export function Header({
 }: HeaderProps) {
   const {shop, menu} = header;
   const headerRef = useRef<HTMLElement | null>(null);
+  const observerRef = useRef<Observer | null>(null);
   const {handleSlug} = usePageTransition();
+  const location = useLocation();
 
   // RETRACTABLE HEADER ON SCROLL
   useGSAP(() => {
@@ -41,12 +43,22 @@ export function Header({
 
     const header = headerRef.current;
 
-    const observer = Observer.create({
+    // RESET POSITION ON ROUTE CHANGE
+    GSAP.to(header, {yPercent: 0});
+
+    // KILL PREVIOUS OBSERVER
+    if (observerRef.current) {
+      observerRef.current.kill();
+      observerRef.current = null;
+    }
+
+    // CREATE NEW OBSERVER
+    observerRef.current = Observer.create({
       type: 'wheel,touch,pointer',
       wheelSpeed: -1,
       onUp: (self) => {
         // Hide when scrolling up
-        if (self.deltaY < -200 && window.scrollY > 200)
+        if (self.deltaY < -200 && window.scrollY > 400)
           GSAP.to(header, {
             yPercent: -100,
             duration: 0.5,
@@ -64,10 +76,7 @@ export function Header({
         });
       },
     });
-    return () => {
-      observer.kill();
-    };
-  }, []);
+  }, [location.pathname]);
 
   return (
     <header

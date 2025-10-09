@@ -167,7 +167,8 @@ export function Layout({children}: {children?: React.ReactNode}) {
         ) : (
           children
         )}
-        <ScrollRestoration nonce={nonce} />
+        {/* ADDED SCROLL RESTORATION VIA GSAP SCROLL SMOOTHER ON PAGE LAYOUT */}
+        {/* <ScrollRestoration nonce={nonce} /> */}
         <Scripts nonce={nonce} />
       </body>
     </html>
